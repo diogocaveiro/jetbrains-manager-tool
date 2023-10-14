@@ -119,7 +119,7 @@ APP_LIST = {
         "executable": "pycharm",
     },
     "rider": {
-        "flag": "-r",
+        "flag": "-x",
         "long_flag": "--rider",
         "help": "Rider",
         "folder": "rider",
