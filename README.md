@@ -7,29 +7,30 @@ This tool allows for the streamlined installation of various JetBrains applicati
 ### Installation
 
 **Install Specific JetBrains Applications**:  
-   Use the `-i` or `--install` flag followed by the flags for the applications you wish to install.  
-   Example:  
+Use the `-i` or `--install` flag followed by the flags for the applications you wish to install.  
+Example:  
    ```bash
    ./jetbrains-manager-tool.py -i -p -d
    ```
-   This will install PyCharm Professional and DataGrip.
+This will install PyCharm Professional and DataGrip.
 
 ### Update
 
 **Update All Installed JetBrains Applications**:
-    Simply use the `-u` or `--update` flag. You don't need to specify individual applications.
-    Example:
-    ```bash
-    ./jetbrains-manager-tool.py -u
-    ```
+Simply use the `-u` or `--update` flag. You don't need to specify individual applications.
+Example:
+   ```bash
+   ./jetbrains-manager-tool.py -u
+   ```
+
 ### Removal
-    Uninstall Specific JetBrains Applications:
-    Use the `-r` or `--remove` flag followed by the flags of the applications you wish to uninstall.
-    Example:
-    ```bash
-    ./jetbrains-manager-tool.py -r -p -d
-    ```
-    This command will uninstall PyCharm Professional and DataGrip.
+**Uninstall Specific JetBrains Applications**:
+Use the `-r` or `--remove` flag followed by the flags of the applications you wish to uninstall.
+Example:
+   ```bash
+   ./jetbrains-manager-tool.py -r -p -d
+   ```
+This command will uninstall PyCharm Professional and DataGrip.
 
 ## Flags
 
