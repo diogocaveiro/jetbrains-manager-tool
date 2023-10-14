@@ -16,9 +16,21 @@ import sys
 import xml.etree.ElementTree as elementTree
 
 JETBRAINS_XML_URL = "https://www.jetbrains.com/updates/updates.xml"
+ANDROID_STUDIO_XML_URL = "https://dl.google.com/android/studio/patches/updates.xml"
 JETBRAINS_INSTALL_PATH = "/opt/jetbrains/"
 
 APP_LIST = {
+    "android-studio": {
+        "flag": "-t",
+        "long_flag": "--android-studio",
+        "help": "Android Studio",
+        "folder": "android-studio",
+        "name": "Android Studio",
+        "channel_name": "Android Studio updates",
+        "download-link": "https://redirector.gvt1.com/edgedl/android/studio/ide-zips/<VERSION>/android-studio-<VERSION>-linux.tar.gz",
+        "comment": "An IDE for Android app development.",
+        "executable": "studio",
+    },
     "pycharm-professional": {
         "flag": "-p",
         "long_flag": "--pycharm",
@@ -71,7 +83,7 @@ APP_LIST = {
         "name": "IntelliJ IDEA",
         "channel_name": "IntelliJ IDEA RELEASE",
         "download-link": "https://download.jetbrains.com/idea/ideaIC-<VERSION>.tar.gz",
-        "comment": "Capable and Ergonomic IDE for JVM",
+        "comment": "The IDE for Java and Kotlin enthusiasts",
         "executable": "idea",
     },
     "intellij-ultimate": {
@@ -82,7 +94,7 @@ APP_LIST = {
         "name": "IntelliJ IDEA",
         "channel_name": "IntelliJ IDEA RELEASE",
         "download-link": "https://download.jetbrains.com/idea/ideaIU-<VERSION>.tar.gz",
-        "comment": "Capable and Ergonomic IDE for JVM",
+        "comment": "The Leading Java and Kotlin IDE",
         "executable": "idea",
     },
     "phpstorm": {
@@ -93,7 +105,7 @@ APP_LIST = {
         "name": "PhpStorm",
         "channel_name": "PhpStorm RELEASE",
         "download-link": "https://download.jetbrains.com/webide/PhpStorm-<VERSION>.tar.gz",
-        "comment": "The Lightning-Smart IDE for PHP Programming by JetBrains",
+        "comment": "The Lightning-Smart IDE for PHP Programming",
         "executable": "phpstorm",
     },
     "pycharm-community": {
@@ -278,17 +290,33 @@ class JetbrainsManagerTool:
         Fetch XML file.
         """
         try:
-            req = requests.get(JETBRAINS_XML_URL)
-            assert req.status_code == 200
-            self.xml_file = req.content
+            # Fetch Jetbrains XML file
+            req_jetbrains = requests.get(JETBRAINS_XML_URL)
+            assert req_jetbrains.status_code == 200
+            jetbrains_xml = req_jetbrains.content
             print("Successfully fetched Jetbrains XML file.")
+
+            # Fetch Android Studio XML file
+            req_android_studio = requests.get(ANDROID_STUDIO_XML_URL)
+            assert req_android_studio.status_code == 200
+            android_studio_xml = req_android_studio.content
+
+            # Append Android Studio XML to JetBrains XML
+            jetbrains_root = elementTree.fromstring(jetbrains_xml)
+            android_studio_root = elementTree.fromstring(android_studio_xml)
+            for child in android_studio_root:
+                jetbrains_root.append(child)
+
+            self.xml_file = elementTree.tostring(jetbrains_root, encoding="utf-8")
+
+            print("Successfully fetched and combined JetBrains and Android Studio XML files.")
+
         except Exception as e:
             print(e)
 
     def __install(self):
         """
         Installs selected apps.
-        TODO: Check if app is already installed.
         """
         root = elementTree.fromstring(self.xml_file)
 
@@ -310,11 +338,32 @@ class JetbrainsManagerTool:
 
             if version_elements:
                 last_version = version_elements[0].get('version')
+
+                if selected_app == "android-studio":
+                    last_version = last_version.split(" ")[2]
             else:
                 print("Couldn't find data for {}".format(APP_LIST[selected_app]['name']))
 
             # Download latest version
-            download_link = APP_LIST[selected_app]["download-link"].replace("<VERSION>", last_version)
+            if selected_app == "android-studio":
+                valid_link_found = False
+                for suffix in reversed(range(1, 30)):
+                    last_version_try = last_version + '.' + str(suffix)
+                    temp_link = APP_LIST[selected_app]["download-link"].replace("<VERSION>", last_version_try)
+                    final_status = self.check_redirect(temp_link)
+
+                    if final_status == 200:
+                        download_link = temp_link
+                        valid_link_found = True
+                        break
+
+                if not valid_link_found:
+                    print("Error. Could not find a valid download link for Android Studio. Aborting installation.")
+                    continue
+
+            else:
+                download_link = APP_LIST[selected_app]["download-link"].replace("<VERSION>", last_version)
+
             print(f"Downloading {APP_LIST[selected_app]['name']} from {download_link}")
             download_path = os.path.join(os.getcwd(),
                                          '{}-{}.tar.gz'.format(APP_LIST[selected_app]['name'], last_version))
@@ -393,6 +442,16 @@ class JetbrainsManagerTool:
                 print("Successfully removed downloaded file at {}".format(download_path))
             except Exception as e:
                 print(e)
+
+    def check_redirect(self, url, max_redirects=5):
+        """Check the final status code after following redirects."""
+        for _ in range(max_redirects):
+            response = requests.head(url, allow_redirects=False)
+            if response.status_code in (301, 302):
+                url = response.headers.get('Location')
+            else:
+                return response.status_code
+        return None
 
 
 if __name__ == "__main__":
