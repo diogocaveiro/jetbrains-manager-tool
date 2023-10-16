@@ -32,6 +32,7 @@ APP_LIST = {
         "download-link": "https://redirector.gvt1.com/edgedl/android/studio/ide-zips/<VERSION>/android-studio-<VERSION>-linux.tar.gz",
         "comment": "An IDE for Android app development",
         "executable": "studio",
+        "wm_class": "jetbrains-studio",
     },
     "pycharm-professional": {
         "flag": "-p",
@@ -43,6 +44,7 @@ APP_LIST = {
         "download-link": "https://download.jetbrains.com/python/pycharm-professional-<VERSION>.tar.gz",
         "comment": "The full stack Python IDE",
         "executable": "pycharm",
+        "wm_class": "jetbrains-pycharm",
     },
     "clion": {
         "flag": "-c",
@@ -54,6 +56,7 @@ APP_LIST = {
         "download-link": "https://download.jetbrains.com/cpp/CLion-<VERSION>.tar.gz",
         "comment": "A cross-platform IDE for C and C++",
         "executable": "clion",
+        "wm_class": "jetbrains-clion",
     },
     "datagrip": {
         "flag": "-d",
@@ -65,6 +68,7 @@ APP_LIST = {
         "download-link": "https://download.jetbrains.com/datagrip/datagrip-<VERSION>.tar.gz",
         "comment": "Your Swiss Army Knife for Databases and SQL",
         "executable": "datagrip",
+        "wm_class": "jetbrains-datagrip",
     },
     "goland": {
         "flag": "-g",
@@ -76,6 +80,7 @@ APP_LIST = {
         "download-link": "https://download.jetbrains.com/go/goland-<VERSION>.tar.gz",
         "comment": "A Clever IDE to Go",
         "executable": "goland",
+        "wm_class": "jetbrains-goland",
     },
     "intellij-community": {
         "flag": "-n",
@@ -87,6 +92,7 @@ APP_LIST = {
         "download-link": "https://download.jetbrains.com/idea/ideaIC-<VERSION>.tar.gz",
         "comment": "The IDE for Java and Kotlin enthusiasts",
         "executable": "idea",
+        "wm_class": "jetbrains-idea",
     },
     "intellij-ultimate": {
         "flag": "-m",
@@ -98,6 +104,7 @@ APP_LIST = {
         "download-link": "https://download.jetbrains.com/idea/ideaIU-<VERSION>.tar.gz",
         "comment": "The Leading Java and Kotlin IDE",
         "executable": "idea",
+        "wm_class": "jetbrains-idea",
     },
     "phpstorm": {
         "flag": "-k",
@@ -109,6 +116,7 @@ APP_LIST = {
         "download-link": "https://download.jetbrains.com/webide/PhpStorm-<VERSION>.tar.gz",
         "comment": "The Lightning-Smart IDE for PHP Programming",
         "executable": "phpstorm",
+        "wm_class": "jetbrains-phpstorm",
     },
     "pycharm-community": {
         "flag": "-y",
@@ -120,6 +128,7 @@ APP_LIST = {
         "download-link": "https://download.jetbrains.com/python/pycharm-community-<VERSION>.tar.gz",
         "comment": "The Python IDE for Professional Developers",
         "executable": "pycharm",
+        "wm_class": "jetbrains-pycharm",
     },
     "pycharm-edu": {
         "flag": "-e",
@@ -131,6 +140,7 @@ APP_LIST = {
         "download-link": "https://download.jetbrains.com/python/pycharm-edu-<VERSION>.tar.gz",
         "comment": "The Python IDE for Professional Developers",
         "executable": "pycharm",
+        "wm_class": "jetbrains-pycharm",
     },
     "rider": {
         "flag": "-x",
@@ -142,6 +152,7 @@ APP_LIST = {
         "download-link": "https://download.jetbrains.com/rider/JetBrains.Rider-<VERSION>.tar.gz",
         "comment": "Cross-platform .NET IDE based on IntelliJ platform and ReSharper",
         "executable": "rider",
+        "wm_class": "jetbrains-rider",
     },
     "rubymine": {
         "flag": "-b",
@@ -153,6 +164,7 @@ APP_LIST = {
         "download-link": "https://download.jetbrains.com/ruby/RubyMine-<VERSION>.tar.gz",
         "comment": "The Most Intelligent Ruby and Rails IDE",
         "executable": "rubymine",
+        "wm_class": "jetbrains-rubymine",
     },
     "webstorm": {
         "flag": "-w",
@@ -164,6 +176,7 @@ APP_LIST = {
         "download-link": "https://download.jetbrains.com/webstorm/WebStorm-<VERSION>.tar.gz",
         "comment": "The Smartest JavaScript IDE",
         "executable": "webstorm",
+        "wm_class": "jetbrains-webstorm",
     },
     "appcode": {
         "flag": "-a",
@@ -175,6 +188,7 @@ APP_LIST = {
         "download-link": "https://download.jetbrains.com/objc/AppCode-<VERSION>.tar.gz",
         "comment": "Smart IDE for iOS/macOS development",
         "executable": "appcode",
+        "wm_class": "jetbrains-appcode",
     },
     "aquacode": {
         "flag": "-q",
@@ -186,6 +200,7 @@ APP_LIST = {
         "download-link": "https://download.jetbrains.com/aquacode/AquaCode-<VERSION>.tar.gz",
         "comment": "A powerful IDE for test automation",
         "executable": "aquacode",
+        "wm_class": "jetbrains-aquacode",
     },
     "dataspell": {
         "flag": "-s",
@@ -197,6 +212,7 @@ APP_LIST = {
         "download-link": "https://download.jetbrains.com/python/dataspell-<VERSION>.tar.gz",
         "comment": "The data science IDE",
         "executable": "dataspell",
+        "wm_class": "jetbrains-dataspell",
     },
     "rustrover": {
         "flag": "-o",
@@ -208,6 +224,7 @@ APP_LIST = {
         "download-link": "https://download.jetbrains.com/rustrover/RustRover-<VERSION>.tar.gz",
         "comment": "The IDE for Rust",
         "executable": "rustrover",
+        "wm_class": "jetbrains-rustrover",
     },
 }
 
@@ -352,15 +369,10 @@ class JetbrainsManagerTool:
                     "It was not possible to find data for {}".format(APP_LIST[app]["name"])
                 )
 
-    def __update(self):
-        """
-        Updates selected or all installed apps.
-        """
-        pass
-
-    def __install(self, update=False):
+    def __install(self, update=False, only_update_data=True):
         """
         Installs selected apps.
+        Updates selected or all installed apps.
         """
 
         # Check outdated applications
@@ -390,79 +402,80 @@ class JetbrainsManagerTool:
             )
 
             # Check if app is already installed
-            if os.path.exists(install_path) and not update:
+            if os.path.exists(install_path) and not update and not only_update_data:
                 print(
                     f"{APP_LIST[selected_app]['name']} is already installed. Skipping installation."
                 )
                 continue
 
             # Download latest version
-            if selected_app == "android-studio":
-                valid_link_found = False
-                for suffix in reversed(range(1, 30)):
-                    last_version_try = self.app_versions['android_studio'][0] + "." + str(suffix)
-                    temp_link = APP_LIST[selected_app]["download-link"].replace(
-                        "<VERSION>", last_version_try
+            if not only_update_data:
+                if selected_app == "android-studio":
+                    valid_link_found = False
+                    for suffix in reversed(range(1, 30)):
+                        last_version_try = self.app_versions['android_studio'][0] + "." + str(suffix)
+                        temp_link = APP_LIST[selected_app]["download-link"].replace(
+                            "<VERSION>", last_version_try
+                        )
+                        final_status = self.check_redirect(temp_link)
+
+                        if final_status == 200:
+                            download_link = temp_link
+                            valid_link_found = True
+                            break
+
+                    if not valid_link_found:
+                        print(
+                            "Error. Could not find a valid download link for Android Studio. Aborting installation."
+                        )
+                        continue
+
+                else:
+                    download_link = APP_LIST[selected_app]["download-link"].replace(
+                        "<VERSION>", self.app_versions[selected_app][0]
                     )
-                    final_status = self.check_redirect(temp_link)
 
-                    if final_status == 200:
-                        download_link = temp_link
-                        valid_link_found = True
-                        break
-
-                if not valid_link_found:
-                    print(
-                        "Error. Could not find a valid download link for Android Studio. Aborting installation."
-                    )
-                    continue
-
-            else:
-                download_link = APP_LIST[selected_app]["download-link"].replace(
-                    "<VERSION>", self.app_versions[selected_app][0]
+                print(f"Downloading {APP_LIST[selected_app]['name']} from {download_link}")
+                download_path = os.path.join(
+                    os.getcwd(),
+                    "{}-{}.tar.gz".format(APP_LIST[selected_app]["name"], self.app_versions[selected_app][0]),
                 )
 
-            print(f"Downloading {APP_LIST[selected_app]['name']} from {download_link}")
-            download_path = os.path.join(
-                os.getcwd(),
-                "{}-{}.tar.gz".format(APP_LIST[selected_app]["name"], self.app_versions[selected_app][0]),
-            )
+                if os.path.exists(download_path):
+                    print("File already exists. Skipping download.")
+                else:
+                    try:
+                        req = requests.get(download_link)
+                        assert req.status_code == 200
 
-            if os.path.exists(download_path):
-                print("File already exists. Skipping download.")
-            else:
-                try:
-                    req = requests.get(download_link)
-                    assert req.status_code == 200
+                        with open(download_path, "wb") as f:
+                            f.write(req.content)
 
-                    with open(download_path, "wb") as f:
-                        f.write(req.content)
+                        print(
+                            "Successfully downloaded app file to {}".format(download_path)
+                        )
+                    except Exception as e:
+                        print(e)
 
-                    print(
-                        "Successfully downloaded app file to {}".format(download_path)
-                    )
-                except Exception as e:
-                    print(e)
-
-            # Extract file
-            print("Extracting file...")
-            if not os.path.exists(install_path):
-                os.makedirs(install_path)
-                try:
-                    result = subprocess.call(
-                        [
-                            "sudo",
-                            "tar",
-                            "-xzf",
-                            download_path,
-                            "-C",
-                            install_path,
-                            "--strip-components=1",
-                        ]
-                    )
-                    assert result != 0
-                except Exception as e:
-                    print(e)
+                # Extract file
+                print("Extracting file...")
+                if not os.path.exists(install_path):
+                    os.makedirs(install_path)
+                    try:
+                        result = subprocess.call(
+                            [
+                                "sudo",
+                                "tar",
+                                "-xzf",
+                                download_path,
+                                "-C",
+                                install_path,
+                                "--strip-components=1",
+                            ]
+                        )
+                        assert result != 0
+                    except Exception as e:
+                        print(e)
 
             # Create desktop entry
             try:
@@ -490,6 +503,8 @@ class JetbrainsManagerTool:
                     f.write("Terminal=false\n")
                     f.write("Type=Application\n")
                     f.write("Categories=Development;\n")
+                    f.write("StartupWMClass={}\n".format(APP_LIST[selected_app]["wm_class"]))
+
                     f.write("Comment={}\n".format(APP_LIST[selected_app]["comment"]))
 
                 print(
@@ -536,13 +551,14 @@ class JetbrainsManagerTool:
                 print(e)
 
             # Remove downloaded file
-            try:
-                os.remove(download_path)
-                print(
-                    "Successfully removed downloaded file at {}".format(download_path)
-                )
-            except Exception as e:
-                print(e)
+            if not only_update_data:
+                try:
+                    os.remove(download_path)
+                    print(
+                        "Successfully removed downloaded file at {}".format(download_path)
+                    )
+                except Exception as e:
+                    print(e)
 
     def check_redirect(self, url, max_redirects=5):
         """Check the final status code after following redirects."""
