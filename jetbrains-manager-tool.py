@@ -251,6 +251,9 @@ class JetbrainsManagerTool:
         arg_parser.add_argument(
             "-i", "--install", action="store_true", help="Install mode."
         )
+        arg_parser.add_argument(
+            "-r", "--remove", action="store_true", help="Removal mode."
+        )
         for app in APP_LIST.values():
             arg_parser.add_argument(app["flag"], action="store_true", help=app["help"])
         args = arg_parser.parse_args()
@@ -306,7 +309,7 @@ class JetbrainsManagerTool:
         if self.installed_apps:
             print(
                 "The following apps are already installed:\n"
-                + "\n".join(self.installed_apps.keys())
+                + "\n".join([app_content['help'] for app, app_content in APP_LIST.items() if app in self.installed_apps.keys()])
             )
         else:
             print("No app installed in the designated install folder.")
