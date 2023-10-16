@@ -278,13 +278,12 @@ class JetbrainsManagerTool:
         self.installed_apps = {}
         for key, value in APP_LIST.items():
             install_path = os.path.join(JETBRAINS_INSTALL_PATH, value["folder"])
-            print(install_path)
             if os.path.exists(install_path):
-                print('exists')
                 with open(os.path.join(install_path, 'product-info.json'), 'r') as json_file:
-                    version = json.load(json_file)['version']
-                    print(f'{key}: {version}')
-                self.installed_apps[key] = version
+                    data = json.load(json_file)
+                    version = data['version']
+                    build_number = data['buildNumber']
+                self.installed_apps[key] = [version, build_number]
 
         # Print result
         if self.installed_apps:
@@ -326,6 +325,33 @@ class JetbrainsManagerTool:
         except Exception as e:
             print(e)
 
+    def __get_current_versions(self, list_of_apps: list):
+
+        root = elementTree.fromstring(self.xml_file)
+        self.app_versions = {}
+
+        for app in list_of_apps:
+            version_query = "./product[@name='{}']/channel[@name='{}']/build".format(
+                APP_LIST[app]["name"], APP_LIST[app]["channel_name"]
+            )
+            version_elements = root.findall(version_query)
+
+            if version_elements:
+                last_version = version_elements[0].get("version")
+
+                if app == "android-studio":
+                    last_version = last_version.split(" ")[2]
+                    build_number = version_elements[0].get("number")[3:]
+                else:
+                    build_number = version_elements[0].get("fullNumber")
+
+                self.app_versions[app] = [last_version, build_number]
+
+            else:
+                print(
+                    "It was not possible to find data for {}".format(APP_LIST[app]["name"])
+                )
+
     def __update(self):
         """
         Updates selected or all installed apps.
@@ -336,69 +362,45 @@ class JetbrainsManagerTool:
         """
         Installs selected apps.
         """
-        root = elementTree.fromstring(self.xml_file)
 
         # Check outdated applications
         if update:
-            print('UPDATE CALLED')
             outdated_apps = []
-            for installed_app, installed_version in self.installed_apps.items():
-                version_query = "./product[@name='{}']/channel[@name='{}']/build".format(
-                    APP_LIST[installed_app]["name"], APP_LIST[installed_app]["channel_name"]
-                )
-                version_elements = root.findall(version_query)
+            self.__get_current_versions(list(self.installed_apps.keys()))
 
-                if version_elements:
-                    last_version = version_elements[0].get("version")
-
-                    if installed_app == "android-studio":
-                        last_version = last_version.split(" ")[2]
-                else:
-                    print(
-                        "Couldn't find data for {}".format(APP_LIST[installed_app]["name"])
-                    )
-
-                if installed_version != last_version:
+            for installed_app, version_data in self.installed_apps.items():
+                if version_data[1] != self.app_versions[installed_app][1]:
                     outdated_apps.append(installed_app)
 
-            print(outdated_apps)
+            if not outdated_apps:
+                print("All applications are up-to-date.")
+                return
 
-            return
+            install_process_apps = outdated_apps
 
-        for selected_app in self.selected_apps:
+        else:
+            self.__get_current_versions(list(self.selected_apps))
+            install_process_apps = self.selected_apps
+
+        # Install process
+        for selected_app in install_process_apps:
             # Define install path
             install_path = os.path.join(
                 JETBRAINS_INSTALL_PATH, APP_LIST[selected_app]["folder"]
             )
 
             # Check if app is already installed
-            if os.path.exists(install_path):
+            if os.path.exists(install_path) and not update:
                 print(
                     f"{APP_LIST[selected_app]['name']} is already installed. Skipping installation."
                 )
                 continue
 
-            # Check last version
-            version_query = "./product[@name='{}']/channel[@name='{}']/build".format(
-                APP_LIST[selected_app]["name"], APP_LIST[selected_app]["channel_name"]
-            )
-            version_elements = root.findall(version_query)
-
-            if version_elements:
-                last_version = version_elements[0].get("version")
-
-                if selected_app == "android-studio":
-                    last_version = last_version.split(" ")[2]
-            else:
-                print(
-                    "Couldn't find data for {}".format(APP_LIST[selected_app]["name"])
-                )
-
             # Download latest version
             if selected_app == "android-studio":
                 valid_link_found = False
                 for suffix in reversed(range(1, 30)):
-                    last_version_try = last_version + "." + str(suffix)
+                    last_version_try = self.app_versions['android_studio'][0] + "." + str(suffix)
                     temp_link = APP_LIST[selected_app]["download-link"].replace(
                         "<VERSION>", last_version_try
                     )
@@ -417,13 +419,13 @@ class JetbrainsManagerTool:
 
             else:
                 download_link = APP_LIST[selected_app]["download-link"].replace(
-                    "<VERSION>", last_version
+                    "<VERSION>", self.app_versions[selected_app][0]
                 )
 
             print(f"Downloading {APP_LIST[selected_app]['name']} from {download_link}")
             download_path = os.path.join(
                 os.getcwd(),
-                "{}-{}.tar.gz".format(APP_LIST[selected_app]["name"], last_version),
+                "{}-{}.tar.gz".format(APP_LIST[selected_app]["name"], self.app_versions[selected_app][0]),
             )
 
             if os.path.exists(download_path):
