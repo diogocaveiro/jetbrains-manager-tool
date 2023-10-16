@@ -2,12 +2,12 @@
 
 """
     TODO:
-        - Update all
-        - Update selected apps
         - Change default path
         - Update mimeapps.list
-        - Check if download link exists before download
+    REQUIRES TESTING:
+        - Update all / selected apps
 """
+import shutil
 
 import requests
 import argparse
@@ -21,212 +21,8 @@ JETBRAINS_XML_URL = "https://www.jetbrains.com/updates/updates.xml"
 ANDROID_STUDIO_XML_URL = "https://dl.google.com/android/studio/patches/updates.xml"
 JETBRAINS_INSTALL_PATH = "/opt/jetbrains/"
 
-APP_LIST = {
-    "android-studio": {
-        "flag": "-t",
-        "long_flag": "--android-studio",
-        "help": "Android Studio",
-        "folder": "android-studio",
-        "name": "Android Studio",
-        "channel_name": "Android Studio updates",
-        "download-link": "https://redirector.gvt1.com/edgedl/android/studio/ide-zips/<VERSION>/android-studio-<VERSION>-linux.tar.gz",
-        "comment": "An IDE for Android app development",
-        "executable": "studio",
-        "wm_class": "jetbrains-studio",
-    },
-    "pycharm-professional": {
-        "flag": "-p",
-        "long_flag": "--pycharm",
-        "help": "PyCharm Professional",
-        "folder": "pycharm",
-        "name": "PyCharm",
-        "channel_name": "PyCharm RELEASE",
-        "download-link": "https://download.jetbrains.com/python/pycharm-professional-<VERSION>.tar.gz",
-        "comment": "The full stack Python IDE",
-        "executable": "pycharm",
-        "wm_class": "jetbrains-pycharm",
-    },
-    "clion": {
-        "flag": "-c",
-        "long_flag": "--clion",
-        "help": "CLion",
-        "folder": "clion",
-        "name": "CLion",
-        "channel_name": "CLion RELEASE",
-        "download-link": "https://download.jetbrains.com/cpp/CLion-<VERSION>.tar.gz",
-        "comment": "A cross-platform IDE for C and C++",
-        "executable": "clion",
-        "wm_class": "jetbrains-clion",
-    },
-    "datagrip": {
-        "flag": "-d",
-        "long_flag": "--datagrip",
-        "help": "DataGrip",
-        "folder": "datagrip",
-        "name": "DataGrip",
-        "channel_name": "DataGrip RELEASE",
-        "download-link": "https://download.jetbrains.com/datagrip/datagrip-<VERSION>.tar.gz",
-        "comment": "Your Swiss Army Knife for Databases and SQL",
-        "executable": "datagrip",
-        "wm_class": "jetbrains-datagrip",
-    },
-    "goland": {
-        "flag": "-g",
-        "long_flag": "--goland",
-        "help": "GoLand",
-        "folder": "goland",
-        "name": "GoLand",
-        "channel_name": "GoLand RELEASE",
-        "download-link": "https://download.jetbrains.com/go/goland-<VERSION>.tar.gz",
-        "comment": "A Clever IDE to Go",
-        "executable": "goland",
-        "wm_class": "jetbrains-goland",
-    },
-    "intellij-community": {
-        "flag": "-n",
-        "long_flag": "--intellij-community",
-        "help": "IntelliJ IDEA Community",
-        "folder": "ideaIC",
-        "name": "IntelliJ IDEA",
-        "channel_name": "IntelliJ IDEA RELEASE",
-        "download-link": "https://download.jetbrains.com/idea/ideaIC-<VERSION>.tar.gz",
-        "comment": "The IDE for Java and Kotlin enthusiasts",
-        "executable": "idea",
-        "wm_class": "jetbrains-idea",
-    },
-    "intellij-ultimate": {
-        "flag": "-m",
-        "long_flag": "--intellij-ultimate",
-        "help": "IntelliJ IDEA Ultimate",
-        "folder": "ideaIU",
-        "name": "IntelliJ IDEA",
-        "channel_name": "IntelliJ IDEA RELEASE",
-        "download-link": "https://download.jetbrains.com/idea/ideaIU-<VERSION>.tar.gz",
-        "comment": "The Leading Java and Kotlin IDE",
-        "executable": "idea",
-        "wm_class": "jetbrains-idea",
-    },
-    "phpstorm": {
-        "flag": "-k",
-        "long_flag": "--phpstorm",
-        "help": "PhpStorm",
-        "folder": "phpstorm",
-        "name": "PhpStorm",
-        "channel_name": "PhpStorm RELEASE",
-        "download-link": "https://download.jetbrains.com/webide/PhpStorm-<VERSION>.tar.gz",
-        "comment": "The Lightning-Smart IDE for PHP Programming",
-        "executable": "phpstorm",
-        "wm_class": "jetbrains-phpstorm",
-    },
-    "pycharm-community": {
-        "flag": "-y",
-        "long_flag": "--pycharm-community",
-        "help": "PyCharm Community",
-        "folder": "pycharm-community",
-        "name": "PyCharm Community",
-        "channel_name": "PyCharm RELEASE",
-        "download-link": "https://download.jetbrains.com/python/pycharm-community-<VERSION>.tar.gz",
-        "comment": "The Python IDE for Professional Developers",
-        "executable": "pycharm",
-        "wm_class": "jetbrains-pycharm",
-    },
-    "pycharm-edu": {
-        "flag": "-e",
-        "long_flag": "--pycharm-edu",
-        "help": "PyCharm Edu",
-        "folder": "pycharm-edu",
-        "name": "PyCharm Edu",
-        "channel_name": "PyCharm Edu RELEASE",
-        "download-link": "https://download.jetbrains.com/python/pycharm-edu-<VERSION>.tar.gz",
-        "comment": "The Python IDE for Professional Developers",
-        "executable": "pycharm",
-        "wm_class": "jetbrains-pycharm",
-    },
-    "rider": {
-        "flag": "-x",
-        "long_flag": "--rider",
-        "help": "Rider",
-        "folder": "rider",
-        "name": "Rider",
-        "channel_name": "Rider RELEASE",
-        "download-link": "https://download.jetbrains.com/rider/JetBrains.Rider-<VERSION>.tar.gz",
-        "comment": "Cross-platform .NET IDE based on IntelliJ platform and ReSharper",
-        "executable": "rider",
-        "wm_class": "jetbrains-rider",
-    },
-    "rubymine": {
-        "flag": "-b",
-        "long_flag": "--rubymine",
-        "help": "RubyMine",
-        "folder": "rubymine",
-        "name": "RubyMine",
-        "channel_name": "RubyMine RELEASE",
-        "download-link": "https://download.jetbrains.com/ruby/RubyMine-<VERSION>.tar.gz",
-        "comment": "The Most Intelligent Ruby and Rails IDE",
-        "executable": "rubymine",
-        "wm_class": "jetbrains-rubymine",
-    },
-    "webstorm": {
-        "flag": "-w",
-        "long_flag": "--webstorm",
-        "help": "WebStorm",
-        "folder": "webstorm",
-        "name": "WebStorm",
-        "channel_name": "WebStorm RELEASE",
-        "download-link": "https://download.jetbrains.com/webstorm/WebStorm-<VERSION>.tar.gz",
-        "comment": "The Smartest JavaScript IDE",
-        "executable": "webstorm",
-        "wm_class": "jetbrains-webstorm",
-    },
-    "appcode": {
-        "flag": "-a",
-        "long_flag": "--appcode",
-        "help": "AppCode",
-        "folder": "appcode",
-        "name": "AppCode",
-        "channel_name": "AppCode RELEASE",
-        "download-link": "https://download.jetbrains.com/objc/AppCode-<VERSION>.tar.gz",
-        "comment": "Smart IDE for iOS/macOS development",
-        "executable": "appcode",
-        "wm_class": "jetbrains-appcode",
-    },
-    "aquacode": {
-        "flag": "-q",
-        "long_flag": "--aquacode",
-        "help": "AquaCode",
-        "folder": "aquacode",
-        "name": "AquaCode",
-        "channel_name": "AquaCode RELEASE",
-        "download-link": "https://download.jetbrains.com/aquacode/AquaCode-<VERSION>.tar.gz",
-        "comment": "A powerful IDE for test automation",
-        "executable": "aquacode",
-        "wm_class": "jetbrains-aquacode",
-    },
-    "dataspell": {
-        "flag": "-s",
-        "long_flag": "--dataspell",
-        "help": "DataSpell",
-        "folder": "dataspell",
-        "name": "DataSpell",
-        "channel_name": "DataSpell RELEASE",
-        "download-link": "https://download.jetbrains.com/python/dataspell-<VERSION>.tar.gz",
-        "comment": "The data science IDE",
-        "executable": "dataspell",
-        "wm_class": "jetbrains-dataspell",
-    },
-    "rustrover": {
-        "flag": "-o",
-        "long_flag": "--rustrover",
-        "help": "RustRover",
-        "folder": "rustrover",
-        "name": "RustRover",
-        "channel_name": "RustRover RELEASE",
-        "download-link": "https://download.jetbrains.com/rustrover/RustRover-<VERSION>.tar.gz",
-        "comment": "The IDE for Rust",
-        "executable": "rustrover",
-        "wm_class": "jetbrains-rustrover",
-    },
-}
+with open('apps_data.json', 'r') as json_file:
+    APP_LIST = json.load(json_file)
 
 
 class JetbrainsManagerTool:
@@ -309,7 +105,8 @@ class JetbrainsManagerTool:
         if self.installed_apps:
             print(
                 "The following apps are already installed:\n"
-                + "\n".join([app_content['help'] for app, app_content in APP_LIST.items() if app in self.installed_apps.keys()])
+                + "  - "
+                + "\n  - ".join([app_content['help'] for app, app_content in APP_LIST.items() if app in self.installed_apps.keys()])
             )
         else:
             print("No app installed in the designated install folder.")
@@ -372,7 +169,7 @@ class JetbrainsManagerTool:
                     "It was not possible to find data for {}".format(APP_LIST[app]["name"])
                 )
 
-    def __install(self, update=False, only_update_data=True):
+    def __install(self, update=False, only_update_data=False):
         """
         Installs selected apps.
         Updates selected or all installed apps.
@@ -385,7 +182,8 @@ class JetbrainsManagerTool:
 
             for installed_app, version_data in self.installed_apps.items():
                 if version_data[1] != self.app_versions[installed_app][1]:
-                    outdated_apps.append(installed_app)
+                    if not self.selected_apps or installed_app in self.selected_apps:
+                        outdated_apps.append(installed_app)
 
             if not outdated_apps:
                 print("All applications are up-to-date.")
@@ -399,6 +197,8 @@ class JetbrainsManagerTool:
 
         # Install process
         for selected_app in install_process_apps:
+            print("\n{} {}...".format("Updating" if update else "Installing", APP_LIST[selected_app]["name"]))
+
             # Define install path
             install_path = os.path.join(
                 JETBRAINS_INSTALL_PATH, APP_LIST[selected_app]["folder"]
@@ -410,6 +210,8 @@ class JetbrainsManagerTool:
                     f"{APP_LIST[selected_app]['name']} is already installed. Skipping installation."
                 )
                 continue
+            elif os.path.exists(install_path) and update and not only_update_data:
+                shutil.rmtree(install_path)
 
             # Download latest version
             if not only_update_data:
