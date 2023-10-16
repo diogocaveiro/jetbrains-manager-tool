@@ -4,6 +4,7 @@
     TODO:
         - Change default path
         - Update mimeapps.list
+        - Remove/Install/Update flags logic
     REQUIRES TESTING:
         - Update all / selected apps
 """
@@ -57,9 +58,6 @@ class JetbrainsManagerTool:
         if args.update and args.install:
             print("Error: You can only use either update or install flags.")
             return
-        elif not args.update and not args.install:
-            print("Error: You must use either an update or install flags.")
-            return
 
         # Check selected apps
         self.selected_apps = [
@@ -86,6 +84,14 @@ class JetbrainsManagerTool:
         if args.update:
             self.__install(update=True)
 
+        # Remove mode
+        if args.remove:
+            if not self.selected_apps:
+                print("No app selected. Stopping installer.")
+                return
+            else:
+                self.__remove()
+
     def __check_installed_apps(self):
         """
         Checks installed applications and its versions.
@@ -106,7 +112,8 @@ class JetbrainsManagerTool:
             print(
                 "The following apps are already installed:\n"
                 + "  - "
-                + "\n  - ".join([app_content['help'] for app, app_content in APP_LIST.items() if app in self.installed_apps.keys()])
+                + "\n  - ".join(
+                    [app_content['help'] for app, app_content in APP_LIST.items() if app in self.installed_apps.keys()])
             )
         else:
             print("No app installed in the designated install folder.")
@@ -364,6 +371,13 @@ class JetbrainsManagerTool:
                     )
                 except Exception as e:
                     print(e)
+
+    def __remove(self):
+        print('REMOVE MODE CALLED')
+        """Removes selected apps."""
+        for selected_app in self.selected_apps:
+            if selected_app in self.installed_apps.keys():
+                print("Removing {}...".format(APP_LIST[selected_app]["name"]))
 
     def check_redirect(self, url, max_redirects=5):
         """Check the final status code after following redirects."""
