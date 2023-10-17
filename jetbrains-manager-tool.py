@@ -26,6 +26,17 @@ with open('apps_data.json', 'r') as json_file:
     APP_LIST = json.load(json_file)
 
 
+def check_redirect(url, max_redirects=5):
+    """Check the final status code after following redirects."""
+    for _ in range(max_redirects):
+        response = requests.head(url, allow_redirects=False)
+        if response.status_code in (301, 302):
+            url = response.headers.get("Location")
+        else:
+            return response.status_code
+    return None
+
+
 class JetbrainsManagerTool:
     def __init__(self):
         print("Initializing Jetbrains Updater.")
@@ -176,7 +187,7 @@ class JetbrainsManagerTool:
                     "It was not possible to find data for {}".format(APP_LIST[app]["name"])
                 )
 
-    def __install(self, update=False, only_update_data=False):
+    def __install(self, update=False, only_update_data=True):
         """
         Installs selected apps.
         Updates selected or all installed apps.
@@ -229,7 +240,7 @@ class JetbrainsManagerTool:
                         temp_link = APP_LIST[selected_app]["download-link"].replace(
                             "<VERSION>", last_version_try
                         )
-                        final_status = self.check_redirect(temp_link)
+                        final_status = check_redirect(temp_link)
 
                         if final_status == 200:
                             download_link = temp_link
@@ -373,23 +384,51 @@ class JetbrainsManagerTool:
                     print(e)
 
     def __remove(self):
-        print('REMOVE MODE CALLED')
         """Removes selected apps."""
+
         for selected_app in self.selected_apps:
             if selected_app in self.installed_apps.keys():
+                # Removal confirmation
+                confirmation_question = input("\nAre you sure you want to remove {}? Enter YES for confirmation.\n".format(APP_LIST[selected_app]["name"]))
+                if confirmation_question != 'YES':
+                    print("Cancelling removal.")
+                    return
+
                 print("Removing {}...".format(APP_LIST[selected_app]["name"]))
 
-    def check_redirect(self, url, max_redirects=5):
-        """Check the final status code after following redirects."""
-        for _ in range(max_redirects):
-            response = requests.head(url, allow_redirects=False)
-            if response.status_code in (301, 302):
-                url = response.headers.get("Location")
-            else:
-                return response.status_code
-        return None
+                # Remove directory
+                try:
+                    install_path = os.path.join(JETBRAINS_INSTALL_PATH, APP_LIST[selected_app]["folder"])
+                    print(install_path)
+
+                except Exception as e:
+                    print(e)
+
+                # Remove desktop entry
+                try:
+                    desktop_entry_path = os.path.join(
+                        "/usr/share/applications", "{}.desktop".format(selected_app)
+                    )
+
+                    if os.path.exists(desktop_entry_path):
+                        print("Removing desktop entry.")
+                        os.remove(desktop_entry_path)
+
+                except Exception as e:
+                    print(e)
+
+                # Remove symlink
+                try:
+                    symlink_path = os.path.join("/usr/local/bin", selected_app)
+
+                    if os.path.exists(symlink_path):
+                        print("Removing symlink.")
+                        os.remove(symlink_path)
+
+                except Exception as e:
+                    print(e)
 
 
 if __name__ == "__main__":
     updater = JetbrainsManagerTool
-    updater()
+    up
