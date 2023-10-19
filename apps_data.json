@@ -36,7 +36,7 @@
     "wm_class": "jetbrains-clion"
   },
   "datagrip": {
-    "flag": "-d",
+    "flag": "-j",
     "long_flag": "--datagrip",
     "help": "DataGrip",
     "folder": "datagrip",

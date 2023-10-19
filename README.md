@@ -10,7 +10,7 @@ This tool allows for the streamlined installation of various JetBrains applicati
 Use the `-i` or `--install` flag followed by the flags for the applications you wish to install.  
 Example:  
    ```bash
-   ./jetbrains-manager-tool.py -i -p -d
+   ./jetbrains-manager-tool.py -i -p -j
    ```
 This will install PyCharm Professional and DataGrip.
 
@@ -34,7 +34,7 @@ This command will uninstall PyCharm Professional and DataGrip.
 
 ## Flags
 
-### Operation Flags
+### Operation Flags (Choose one)
 
 | Operation                 | Short Flag | Long Flag                | Description                                               |
 |:--------------------------|:----------:|:-------------------------|:----------------------------------------------------------|
@@ -48,7 +48,7 @@ This command will uninstall PyCharm Professional and DataGrip.
 |:------------------------|:----------:|:-----------------------|:----------------------------------------------------------|
 | PyCharm Professional    |    `-p`    | `--pycharm`            | The full stack Python IDE.                                |
 | CLion                   |    `-c`    | `--clion`              | A cross-platform IDE for C and C++.                       |
-| DataGrip                |    `-d`    | `--datagrip`           | Your Swiss Army Knife for Databases and SQL.              |
+| DataGrip                |    `-j`    | `--datagrip`           | Your Swiss Army Knife for Databases and SQL.              |
 | GoLand                  |    `-g`    | `--goland`             | A Clever IDE to Go.                                       |
 | IntelliJ IDEA Community |    `-n`    | `--intellij-community` | Capable and Ergonomic IDE for JVM.                        |
 | IntelliJ IDEA Ultimate  |    `-m`    | `--intellij-ultimate`  | Capable and Ergonomic IDE for JVM.                        |
@@ -63,3 +63,9 @@ This command will uninstall PyCharm Professional and DataGrip.
 | DataSpell               |    `-s`    | `--dataspell`          | The data science IDE.                                     |
 | RustRover               |    `-o`    | `--rustrover`          | The IDE for Rust.                                         |
 | Android Studio          |    `-t`    | `--android-studio`     | An IDE for Android app development.                       |
+
+### Configuraation Flags
+
+| Configuration     | Short Flag | Long Flag     | Description                              |
+|:------------------|:----------:|:--------------|:-----------------------------------------|
+| Install directory |    `-d`    | `--directory` | Install selected JetBrains applications. |

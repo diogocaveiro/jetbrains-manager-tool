@@ -41,62 +41,64 @@ class JetbrainsManagerTool:
     def __init__(self):
         print("Initializing Jetbrains Updater.")
 
-        # Check for root permission
-        if os.geteuid() != 0:
-            print("This script requires root permissions. Please enter your password.")
-
-            ret = subprocess.call(["sudo", "python3"] + sys.argv)
-            if ret != 0:
-                print("Failed to gain root permissions.")
-                sys.exit(1)
-            sys.exit(0)
-
         # Parse arguments
         arg_parser = argparse.ArgumentParser()
-        arg_parser.add_argument(
+        exclusive_group = arg_parser.add_mutually_exclusive_group(required=True)
+
+        # Operation flags
+        exclusive_group.add_argument(
             "-u", "--update", action="store_true", help="Update mode."
         )
-        arg_parser.add_argument(
+        exclusive_group.add_argument(
             "-i", "--install", action="store_true", help="Install mode."
         )
-        arg_parser.add_argument(
+        exclusive_group.add_argument(
             "-r", "--remove", action="store_true", help="Removal mode."
         )
+
+        # Application flags
         for app in APP_LIST.values():
             arg_parser.add_argument(app["flag"], action="store_true", help=app["help"])
+
+        # Configuration flags
+        arg_parser.add_argument("-d",
+                                "--directory",
+                                type=lambda path: path if os.path.exists(path) else argparse.ArgumentTypeError(f"Invalid path: \"{path}\"."),
+                                help="Set the directory for JetBrains' applications.")
+
         args = arg_parser.parse_args()
 
-        if args.update and args.install:
-            print("Error: You can only use either update or install flags.")
-            return
+        # Change default directory
+        if args.directory:
+            global JETBRAINS_INSTALL_PATH
+            JETBRAINS_INSTALL_PATH = args.directory
+            print(f'Custom path: \"{JETBRAINS_INSTALL_PATH}\".')
 
-        # Check selected apps
+        # Check selected applications
         self.selected_apps = [
             app_key
             for app_key, app_data in APP_LIST.items()
             if getattr(args, app_data["flag"][-1], False)
         ]
 
-        # Check installed apps
+        return
+
+        # Check installed applications
         self.__check_installed_apps()
 
         # Fetch JetBrains XML file
         self.__fetch_xml()
 
-        # Install mode
+        # Install, update or removal mode
         if args.install:
             if not self.selected_apps:
                 print("No app selected. Stopping installer.")
                 return
             else:
                 self.__install()
-
-        # Update mode
-        if args.update:
+        elif args.update:
             self.__install(update=True)
-
-        # Remove mode
-        if args.remove:
+        elif args.remove:
             if not self.selected_apps:
                 print("No app selected. Stopping installer.")
                 return
@@ -107,6 +109,7 @@ class JetbrainsManagerTool:
         """
         Checks installed applications and its versions.
         """
+
         # Check installed applications
         self.installed_apps = {}
         for key, value in APP_LIST.items():
@@ -130,9 +133,8 @@ class JetbrainsManagerTool:
             print("No app installed in the designated install folder.")
 
     def __fetch_xml(self):
-        """
-        Fetch XML file.
-        """
+        """Fetch XML file."""
+
         try:
             # Fetch Jetbrains XML file
             req_jetbrains = requests.get(JETBRAINS_XML_URL)
@@ -161,6 +163,7 @@ class JetbrainsManagerTool:
             print(e)
 
     def __get_current_versions(self, list_of_apps: list):
+        """Fetch installed applications' versions."""
 
         root = elementTree.fromstring(self.xml_file)
         self.app_versions = {}
@@ -389,7 +392,9 @@ class JetbrainsManagerTool:
         for selected_app in self.selected_apps:
             if selected_app in self.installed_apps.keys():
                 # Removal confirmation
-                confirmation_question = input("\nAre you sure you want to remove {}? Enter YES for confirmation.\n".format(APP_LIST[selected_app]["name"]))
+                confirmation_question = input(
+                    "\nAre you sure you want to remove {}? Enter YES for confirmation.\n".format(
+                        APP_LIST[selected_app]["name"]))
                 if confirmation_question != 'YES':
                     print("Cancelling removal.")
                     return
@@ -429,6 +434,18 @@ class JetbrainsManagerTool:
                     print(e)
 
 
+def request_root_permissions():
+    """Request root permissions."""
+    if os.geteuid() != 0:
+        print("This script requires root permissions. Please enter your password.")
+        ret = subprocess.call(["sudo", sys.executable] + sys.argv)
+        if ret != 0:
+            sys.exit(1)
+        sys.exit(0)
+
+
 if __name__ == "__main__":
+    request_root_permissions()
+
     updater = JetbrainsManagerTool
-    up
+    updater()
