@@ -64,7 +64,7 @@ This command will uninstall PyCharm Professional and DataGrip.
 | RustRover               |    `-o`    | `--rustrover`          | The IDE for Rust.                                         |
 | Android Studio          |    `-t`    | `--android-studio`     | An IDE for Android app development.                       |
 
-### Configuraation Flags
+### Configuration Flags
 
 | Configuration     | Short Flag | Long Flag            | Description                                |
 |:------------------|:----------:|:---------------------|:-------------------------------------------|
