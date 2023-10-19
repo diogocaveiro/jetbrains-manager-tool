@@ -66,6 +66,7 @@ This command will uninstall PyCharm Professional and DataGrip.
 
 ### Configuraation Flags
 
-| Configuration     | Short Flag | Long Flag     | Description                              |
-|:------------------|:----------:|:--------------|:-----------------------------------------|
-| Install directory |    `-d`    | `--directory` | Install selected JetBrains applications. |
+| Configuration     | Short Flag | Long Flag            | Description                                |
+|:------------------|:----------:|:---------------------|:-------------------------------------------|
+| Install directory |    `-d`    | `--directory`        | Install selected JetBrains applications.   |
+| Only update data  |    `-z`    | `--only-update-date` | Update application menu and symlinks only. |

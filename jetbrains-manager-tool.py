@@ -39,7 +39,7 @@ def check_redirect(url, max_redirects=5):
 
 class JetbrainsManagerTool:
     def __init__(self):
-        print("Initializing Jetbrains Updater.")
+        print("\nInitializing Jetbrains Updater.")
 
         # Parse arguments
         arg_parser = argparse.ArgumentParser()
@@ -63,8 +63,13 @@ class JetbrainsManagerTool:
         # Configuration flags
         arg_parser.add_argument("-d",
                                 "--directory",
-                                type=lambda path: path if os.path.exists(path) else argparse.ArgumentTypeError(f"Invalid path: \"{path}\"."),
+                                type=lambda path: os.makedirs(path, exist_ok=True) or path,
                                 help="Set the directory for JetBrains' applications.")
+
+        arg_parser.add_argument("-z",
+                                "--only-update-data",
+                                action="store_true",
+                                help="Update application menu and symlinks only.")
 
         args = arg_parser.parse_args()
 
@@ -81,8 +86,6 @@ class JetbrainsManagerTool:
             if getattr(args, app_data["flag"][-1], False)
         ]
 
-        return
-
         # Check installed applications
         self.__check_installed_apps()
 
@@ -95,9 +98,9 @@ class JetbrainsManagerTool:
                 print("No app selected. Stopping installer.")
                 return
             else:
-                self.__install()
+                self.__install(only_update_data=args.only_update_data)
         elif args.update:
-            self.__install(update=True)
+            self.__install(update=True, only_update_data=args.only_update_data)
         elif args.remove:
             if not self.selected_apps:
                 print("No app selected. Stopping installer.")
