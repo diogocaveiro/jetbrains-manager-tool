@@ -16,17 +16,17 @@ This will install PyCharm Professional and DataGrip.
 
 ### Update
 
-**Update All Installed JetBrains Applications**:
-Simply use the `-u` or `--update` flag. You don't need to specify individual applications.
-Example:
+**Update All Installed JetBrains Applications**:  
+Simply use the `-u` or `--update` flag. You don't need to specify individual applications.  
+Example:  
    ```bash
    ./jetbrains-manager-tool.py -u
    ```
 
 ### Removal
-**Uninstall Specific JetBrains Applications**:
-Use the `-r` or `--remove` flag followed by the flags of the applications you wish to uninstall.
-Example:
+**Uninstall Specific JetBrains Applications**:  
+Use the `-r` or `--remove` flag followed by the flags of the applications you wish to uninstall.  
+Example:  
    ```bash
    ./jetbrains-manager-tool.py -r -p -d
    ```
@@ -44,29 +44,29 @@ This command will uninstall PyCharm Professional and DataGrip.
 
 ### Application Flags
 
-| Application             | Short Flag | Long Flag              | Description                                               |
-|:------------------------|:----------:|:-----------------------|:----------------------------------------------------------|
-| PyCharm Professional    |    `-p`    | `--pycharm`            | The full stack Python IDE.                                |
-| CLion                   |    `-c`    | `--clion`              | A cross-platform IDE for C and C++.                       |
-| DataGrip                |    `-j`    | `--datagrip`           | Your Swiss Army Knife for Databases and SQL.              |
-| GoLand                  |    `-g`    | `--goland`             | A Clever IDE to Go.                                       |
-| IntelliJ IDEA Community |    `-n`    | `--intellij-community` | Capable and Ergonomic IDE for JVM.                        |
-| IntelliJ IDEA Ultimate  |    `-m`    | `--intellij-ultimate`  | Capable and Ergonomic IDE for JVM.                        |
-| PhpStorm                |    `-k`    | `--phpstorm`           | The Lightning-Smart IDE for PHP Programming by JetBrains. |
-| PyCharm Community       |    `-y`    | `--pycharm-community`  | The Python IDE for Professional Developers.               |
-| PyCharm Edu             |    `-e`    | `--pycharm-edu`        | The Python IDE for Professional Developers.               |
-| Rider                   |    `-x`    | `--rider`              | Cross-platform .NET IDE based on IntelliJ and ReSharper.  |
-| RubyMine                |    `-b`    | `--rubymine`           | The Most Intelligent Ruby and Rails IDE.                  |
-| WebStorm                |    `-w`    | `--webstorm`           | The Smartest JavaScript IDE.                              |
-| AppCode                 |    `-a`    | `--appcode`            | Smart IDE for iOS/macOS development.                      |
-| AquaCode                |    `-q`    | `--aquacode`           | A powerful IDE for test automation.                       |
-| DataSpell               |    `-s`    | `--dataspell`          | The data science IDE.                                     |
-| RustRover               |    `-o`    | `--rustrover`          | The IDE for Rust.                                         |
-| Android Studio          |    `-t`    | `--android-studio`     | An IDE for Android app development.                       |
+| Application               | Short Flag | Long Flag                | Description                                               |
+|:--------------------------|:----------:|:-------------------------|:----------------------------------------------------------|
+| PyCharm Professional      |    `-p`    | `--pycharm`              | The full stack Python IDE.                                |
+| CLion                     |    `-c`    | `--clion`                | A cross-platform IDE for C and C++.                       |
+| DataGrip                  |    `-j`    | `--datagrip`             | Your Swiss Army Knife for Databases and SQL.              |
+| GoLand                    |    `-g`    | `--goland`               | A Clever IDE to Go.                                       |
+| IntelliJ IDEA Community   |    `-n`    | `--intellij-community`   | Capable and Ergonomic IDE for JVM.                        |
+| IntelliJ IDEA Ultimate    |    `-m`    | `--intellij-ultimate`    | Capable and Ergonomic IDE for JVM.                        |
+| PhpStorm                  |    `-k`    | `--phpstorm`             | The Lightning-Smart IDE for PHP Programming by JetBrains. |
+| PyCharm Community         |    `-y`    | `--pycharm-community`    | The Python IDE for Professional Developers.               |
+| PyCharm Edu               |    `-e`    | `--pycharm-edu`          | The Python IDE for Professional Developers.               |
+| Rider                     |    `-x`    | `--rider`                | Cross-platform .NET IDE based on IntelliJ and ReSharper.  |
+| RubyMine                  |    `-b`    | `--rubymine`             | The Most Intelligent Ruby and Rails IDE.                  |
+| WebStorm                  |    `-w`    | `--webstorm`             | The Smartest JavaScript IDE.                              |
+| AppCode                   |    `-a`    | `--appcode`              | Smart IDE for iOS/macOS development.                      |
+| AquaCode                  |    `-q`    | `--aquacode`             | A powerful IDE for test automation.                       |
+| DataSpell                 |    `-s`    | `--dataspell`            | The data science IDE.                                     |
+| RustRover                 |    `-o`    | `--rustrover`            | The IDE for Rust.                                         |
+| Android Studio            |    `-t`    | `--android-studio`       | An IDE for Android app development.                       |
 
 ### Configuration Flags
 
-| Configuration     | Short Flag | Long Flag            | Description                                |
-|:------------------|:----------:|:---------------------|:-------------------------------------------|
-| Install directory |    `-d`    | `--directory`        | Install selected JetBrains applications.   |
-| Only update data  |    `-z`    | `--only-update-data` | Update application menu and symlinks only. |
+| Configuration             | Short Flag | Long Flag                | Description                                               |
+|:--------------------------|:----------:|:-------------------------|:----------------------------------------------------------|
+| Install directory         |    `-d`    | `--directory`            | Set custom directory.                                     |
+| Only update data          |    `-z`    | `--only-update-data`     | Update application menu and symlinks only.                |
