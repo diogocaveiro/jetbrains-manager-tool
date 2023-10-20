@@ -69,7 +69,7 @@ class JetbrainsManagerTool:
                                 action="store_true",
                                 help="Update application menu and symlinks only.")
 
-        arg_parser.add_argument("-u",
+        arg_parser.add_argument("-v",
                                 "--update-mimetypes",
                                 action="store_true",
                                 help="Update mimetypes.")

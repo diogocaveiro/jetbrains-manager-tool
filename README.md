@@ -70,7 +70,7 @@ This command will remove PyCharm Professional and DataGrip.
 |:--------------------------|:----------:|:-------------------------|:-----------------------------------------------------------|
 | Install directory         |    `-d`    | `--directory`            | Set custom directory.                                      |
 | Only update data          |    `-z`    | `--only-update-data`     | Update application menu and symlinks only.                 |
-| Update mimetypes          |    `-u`    | `--update-mimetypes`     | Update application mimetypes.                              |
+| Update mimetypes          |    `-v`    | `--update-mimetypes`     | Update application mimetypes.                              |
   
 ## Disclaimer of Liability
 
