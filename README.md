@@ -1,6 +1,6 @@
 # JetBrains Manager Tool
 
-This tool allows for the streamlined installation of various JetBrains applications. Below is a guide to each application and its associated flags.
+This tool provides a streamlined process for the installation, update, and removal of various JetBrains applications.
   
 ## Usage
 
@@ -24,23 +24,23 @@ Example:
    ```
 
 ### Removal
-**Uninstall Specific JetBrains Applications**:  
-Use the `-r` or `--remove` flag followed by the flags of the applications you wish to uninstall.  
+**Remove Specific JetBrains Applications**:  
+Use the `-r` or `--remove` flag followed by the flags of the applications you wish to remove.  
 Example:  
    ```bash
    ./jetbrains-manager-tool.py -r -p -d
    ```
-This command will uninstall PyCharm Professional and DataGrip.
+This command will remove PyCharm Professional and DataGrip.
   
 ## Flags
 
 ### Operation Flags (Choose one)
 
-| Operation                 | Short Flag | Long Flag                | Description                                               |
-|:--------------------------|:----------:|:-------------------------|:----------------------------------------------------------|
-| Install                   |    `-i`    | `--install`              | Install selected JetBrains applications.                  |
-| Update                    |    `-u`    | `--update`               | Update all installed JetBrains applications.              |
-| Uninstall                 |    `-r`    | `--remove`               | Uninstall selected JetBrains applications.                |
+| Operation | Short Flag | Long Flag                | Description                                  |
+|:----------|:----------:|:-------------------------|:---------------------------------------------|
+| Install   |    `-i`    | `--install`              | Install selected JetBrains applications.     |
+| Update    |    `-u`    | `--update`               | Update all installed JetBrains applications. |
+| Remove    |    `-r`    | `--remove`               | Remove selected JetBrains applications.      |
 
 ### Application Flags
 
