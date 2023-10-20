@@ -38,9 +38,9 @@ This command will uninstall PyCharm Professional and DataGrip.
 
 | Operation                 | Short Flag | Long Flag                | Description                                               |
 |:--------------------------|:----------:|:-------------------------|:----------------------------------------------------------|
-| Install                   | `-i`       | `--install`              | Install selected JetBrains applications.                  |
-| Update                    | `-u`       | `--update`               | Update all installed JetBrains applications.              |
-| Uninstall                 | `-r`       | `--remove`               | Uninstall selected JetBrains applications.                |
+| Install                   |    `-i`    | `--install`              | Install selected JetBrains applications.                  |
+| Update                    |    `-u`    | `--update`               | Update all installed JetBrains applications.              |
+| Uninstall                 |    `-r`    | `--remove`               | Uninstall selected JetBrains applications.                |
 
 ### Application Flags
 
@@ -66,10 +66,11 @@ This command will uninstall PyCharm Professional and DataGrip.
 
 ### Configuration Flags
 
-| Configuration             | Short Flag | Long Flag                | Description                                               |
-|:--------------------------|:----------:|:-------------------------|:----------------------------------------------------------|
-| Install directory         |    `-d`    | `--directory`            | Set custom directory.                                     |
-| Only update data          |    `-z`    | `--only-update-data`     | Update application menu and symlinks only.                |
+| Configuration             | Short Flag | Long Flag                | Description                                                |
+|:--------------------------|:----------:|:-------------------------|:-----------------------------------------------------------|
+| Install directory         |    `-d`    | `--directory`            | Set custom directory.                                      |
+| Only update data          |    `-z`    | `--only-update-data`     | Update application menu and symlinks only.                 |
+| Update mimetypes          |    `-u`    | `--update-mimetypes`     | Update application mimetypes.                              |
 
 ## Disclaimer of Liability
 

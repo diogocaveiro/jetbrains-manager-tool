@@ -69,6 +69,11 @@ class JetbrainsManagerTool:
                                 action="store_true",
                                 help="Update application menu and symlinks only.")
 
+        arg_parser.add_argument("-u",
+                                "--update-mimetypes",
+                                action="store_true",
+                                help="Update mimetypes.")
+
         args = arg_parser.parse_args()
 
         # Change default directory
@@ -96,9 +101,9 @@ class JetbrainsManagerTool:
                 print("No app selected. Stopping installer.")
                 return
             else:
-                self.__install(only_update_data=args.only_update_data)
+                self.__install(only_update_data=args.only_update_data, update_mimetypes=args.update_mimetypes)
         elif args.update:
-            self.__install(update=True, only_update_data=args.only_update_data)
+            self.__install(update=True, only_update_data=args.only_update_data, update_mimetypes=args.update_mimetypes)
         elif args.remove:
             if not self.selected_apps:
                 print("No app selected. Stopping installer.")
@@ -191,7 +196,7 @@ class JetbrainsManagerTool:
                     "It was not possible to find data for {}".format(APP_LIST[app]["name"])
                 )
 
-    def __install(self, update=False, only_update_data=True):
+    def __install(self, update=False, only_update_data=True, update_mimetypes=False):
         """
         Installs selected apps.
         Updates selected or all installed apps.
@@ -333,6 +338,13 @@ class JetbrainsManagerTool:
                     f.write("StartupWMClass={}\n".format(APP_LIST[selected_app]["wm_class"]))
 
                     f.write("Comment={}\n".format(APP_LIST[selected_app]["comment"]))
+
+                    # Create mimetypes
+                    if APP_LIST[selected_app]["mimetype"] and update_mimetypes:
+                        f.write("MimeType=")
+                        for mimetype in APP_LIST[selected_app]["mimetype"]:
+                            f.write(mimetype + ";")
+                        f.write("\n")
 
                 print(
                     "Successfully created desktop entry at {}".format(
