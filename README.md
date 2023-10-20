@@ -1,7 +1,7 @@
 # JetBrains Manager Tool
 
 This tool allows for the streamlined installation of various JetBrains applications. Below is a guide to each application and its associated flags.
-
+  
 ## Usage
 
 ### Installation
@@ -31,7 +31,7 @@ Example:
    ./jetbrains-manager-tool.py -r -p -d
    ```
 This command will uninstall PyCharm Professional and DataGrip.
-
+  
 ## Flags
 
 ### Operation Flags (Choose one)
@@ -71,15 +71,15 @@ This command will uninstall PyCharm Professional and DataGrip.
 | Install directory         |    `-d`    | `--directory`            | Set custom directory.                                      |
 | Only update data          |    `-z`    | `--only-update-data`     | Update application menu and symlinks only.                 |
 | Update mimetypes          |    `-u`    | `--update-mimetypes`     | Update application mimetypes.                              |
-
+  
 ## Disclaimer of Liability
 
 The software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.
-
+  
 ## License
 
 This project is licensed under the GPLv3 License - see the [LICENSE](LICENSE) file for details.
-
+  
 ## No Affiliation
-
+  
 This software is an independent project and has not been authorized, sponsored, or otherwise approved by JetBrains. All product names, logos, and brands are property of their respective owners. All company, product, and service names used in this software are for identification purposes only. Use of these names, logos, and brands does not imply endorsement.
