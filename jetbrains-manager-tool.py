@@ -1,15 +1,13 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 """
     TODO:
-        - Change default path
         - Update mimeapps.list
-        - Remove/Install/Update flags logic
-    REQUIRES TESTING:
+    TESTING:
         - Update all / selected apps
 """
-import shutil
 
+import shutil
 import requests
 import argparse
 import os
