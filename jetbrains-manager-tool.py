@@ -3,6 +3,7 @@
 """
 TODO:
     - Optimize code
+    - Streamline flags / arguments
 """
 
 import shutil
@@ -16,7 +17,7 @@ import json
 
 __author__ = "Diogo Caveiro"
 __date__ = "2023-10-24"
-__version__ = "1.0.0"
+__version__ = "0.2.0"
 __github__ = "https://github.com/diogocaveiro"
 __license__ = "GPLv3 License"
 

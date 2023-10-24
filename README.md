@@ -53,25 +53,30 @@ This command will remove PyCharm Professional and DataGrip.
 | DataGrip                  |    `-j`    | `--datagrip`             | Your Swiss Army Knife for Databases and SQL.              |
 | DataSpell                 |    `-s`    | `--dataspell`            | The data science IDE.                                     |
 | GoLand                    |    `-g`    | `--goland`               | A Clever IDE to Go.                                       |
-| IntelliJ IDEA Community   |    `-n`    | `--intellij-community`   | Capable and Ergonomic IDE for JVM.                        |
-| IntelliJ IDEA Ultimate    |    `-m`    | `--intellij-ultimate`    | Capable and Ergonomic IDE for JVM.                        |
+| IntelliJ IDEA Community   |    `-n`    | `--intellij-community`   | The IDE for pure Java and Kotlin development.             |
+| IntelliJ IDEA Ultimate    |    `-m`    | `--intellij-ultimate`    | The Leading Java and Kotlin IDE                           |
 | PhpStorm                  |    `-k`    | `--phpstorm`             | The Lightning-Smart IDE for PHP Programming by JetBrains. |
 | PyCharm Community         |    `-l`    | `--pycharm-community`    | The Python IDE for Professional Developers.               |
 | PyCharm Edu               |    `-e`    | `--pycharm-edu`          | The Python IDE for Professional Developers.               |
-| PyCharm Professional      |    `-p`    | `--pycharm`              | The full stack Python IDE.                                |
+| PyCharm Professional      |    `-p`    | `--pycharm-professional` | The full stack Python IDE.                                |
 | Rider                     |    `-x`    | `--rider`                | Cross-platform .NET IDE based on IntelliJ and ReSharper.  |
 | RubyMine                  |    `-b`    | `--rubymine`             | The Most Intelligent Ruby and Rails IDE.                  |
 | RustRover                 |    `-o`    | `--rustrover`            | The IDE for Rust.                                         |
 | WebStorm                  |    `-w`    | `--webstorm`             | The Smartest JavaScript IDE.                              |
 
-### Configuration Flags / Arguments
+### Configuration Flags
 
 | Configuration     | Short Flag | Long Flag                 | Description                                                         |
 |:------------------|:----------:|:--------------------------|:--------------------------------------------------------------------|
 | Install directory |    `-d`    | `--directory [directory]` | Set custom directory.                                               |
 | Only update data  |    `-z`    | `--only-update-data`      | Update application menu and symlinks only.                          |
 | Update mimetypes  |    `-v`    | `--update-mimetypes`      | Update application mimetypes.                                       |
+
+### Configuration Arguments
+| Configuration     | Short Flag | Long Flag                 | Description                                                         |
+|:------------------|:----------:|:--------------------------|:--------------------------------------------------------------------|
 | No confirm        |    `-y`    | `--no-confirm`            | Do not ask for confirmation.                                        |
+
 
 ## Disclaimer of Liability
 

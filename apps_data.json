@@ -19,9 +19,9 @@
   },
   "pycharm-professional": {
     "flag": "-p",
-    "long_flag": "--pycharm",
+    "long_flag": "--pycharm-professional",
     "help": "PyCharm Professional",
-    "folder": "pycharm",
+    "folder": "pycharm-professional",
     "name": "PyCharm",
     "channel_name": "PyCharm RELEASE",
     "download-link": "https://download.jetbrains.com/python/pycharm-professional-<VERSION>.tar.gz",
@@ -95,7 +95,7 @@
     "name": "IntelliJ IDEA",
     "channel_name": "IntelliJ IDEA RELEASE",
     "download-link": "https://download.jetbrains.com/idea/ideaIC-<VERSION>.tar.gz",
-    "comment": "The IDE for Java and Kotlin enthusiasts",
+    "comment": "The IDE for pure Java and Kotlin development",
     "executable": "idea",
     "wm_class": "jetbrains-idea",
     "mimetype": [
