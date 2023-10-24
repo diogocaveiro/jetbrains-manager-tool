@@ -64,13 +64,13 @@ This command will remove PyCharm Professional and DataGrip.
 | RustRover                 |    `-o`    | `--rustrover`            | The IDE for Rust.                                         |
 | WebStorm                  |    `-w`    | `--webstorm`             | The Smartest JavaScript IDE.                              |
 
-### Configuration Flags
+### Configuration Flags / Arguments
 
-| Configuration             | Short Flag | Long Flag                | Description                                                |
-|:--------------------------|:----------:|:-------------------------|:-----------------------------------------------------------|
-| Install directory         |    `-d`    | `--directory`            | Set custom directory.                                      |
-| Only update data          |    `-z`    | `--only-update-data`     | Update application menu and symlinks only.                 |
-| Update mimetypes          |    `-v`    | `--update-mimetypes`     | Update application mimetypes.                              |
+| Configuration             | Short Flag | Long Flag                 | Description                                                |
+|:--------------------------|:----------:|:--------------------------|:-----------------------------------------------------------|
+| Install directory         |    `-d`    | `--directory [directory]` | Set custom directory.                                      |
+| Only update data          |    `-z`    | `--only-update-data`      | Update application menu and symlinks only.                 |
+| Update mimetypes          |    `-v`    | `--update-mimetypes`      | Update application mimetypes.                              |
   
 ## Disclaimer of Liability
 
