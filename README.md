@@ -56,7 +56,7 @@ This command will remove PyCharm Professional and DataGrip.
 | IntelliJ IDEA Community   |    `-n`    | `--intellij-community`   | Capable and Ergonomic IDE for JVM.                        |
 | IntelliJ IDEA Ultimate    |    `-m`    | `--intellij-ultimate`    | Capable and Ergonomic IDE for JVM.                        |
 | PhpStorm                  |    `-k`    | `--phpstorm`             | The Lightning-Smart IDE for PHP Programming by JetBrains. |
-| PyCharm Community         |    `-y`    | `--pycharm-community`    | The Python IDE for Professional Developers.               |
+| PyCharm Community         |    `-l`    | `--pycharm-community`    | The Python IDE for Professional Developers.               |
 | PyCharm Edu               |    `-e`    | `--pycharm-edu`          | The Python IDE for Professional Developers.               |
 | PyCharm Professional      |    `-p`    | `--pycharm`              | The full stack Python IDE.                                |
 | Rider                     |    `-x`    | `--rider`                | Cross-platform .NET IDE based on IntelliJ and ReSharper.  |
@@ -66,12 +66,13 @@ This command will remove PyCharm Professional and DataGrip.
 
 ### Configuration Flags / Arguments
 
-| Configuration             | Short Flag | Long Flag                 | Description                                                |
-|:--------------------------|:----------:|:--------------------------|:-----------------------------------------------------------|
-| Install directory         |    `-d`    | `--directory [directory]` | Set custom directory.                                      |
-| Only update data          |    `-z`    | `--only-update-data`      | Update application menu and symlinks only.                 |
-| Update mimetypes          |    `-v`    | `--update-mimetypes`      | Update application mimetypes.                              |
-  
+| Configuration     | Short Flag | Long Flag                 | Description                                                         |
+|:------------------|:----------:|:--------------------------|:--------------------------------------------------------------------|
+| Install directory |    `-d`    | `--directory [directory]` | Set custom directory.                                               |
+| Only update data  |    `-z`    | `--only-update-data`      | Update application menu and symlinks only.                          |
+| Update mimetypes  |    `-v`    | `--update-mimetypes`      | Update application mimetypes.                                       |
+| No confirm        |    `-y`    | `--no-confirm`            | Do not ask for confirmation.                                        |
+
 ## Disclaimer of Liability
 
 The software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.

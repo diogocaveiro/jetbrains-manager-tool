@@ -73,6 +73,11 @@ class JetbrainsManagerTool:
                                 action="store_true",
                                 help="Update mimetypes.")
 
+        arg_parser.add_argument("-y",
+                                "--no-confirm",
+                                action="store_true",
+                                help="Do not ask for confirmation.")
+
         args = arg_parser.parse_args()
 
         # Change default directory
@@ -100,15 +105,17 @@ class JetbrainsManagerTool:
                 print("No app selected. Stopping installer.")
                 return
             else:
-                self.__install(only_update_data=args.only_update_data, update_mimetypes=args.update_mimetypes)
+                self.__install(only_update_data=args.only_update_data, update_mimetypes=args.update_mimetypes,
+                               no_confirm=args.no_confirm)
         elif args.update:
-            self.__install(update=True, only_update_data=args.only_update_data, update_mimetypes=args.update_mimetypes)
+            self.__install(update=True, only_update_data=args.only_update_data, update_mimetypes=args.update_mimetypes,
+                           no_confirm=args.no_confirm)
         elif args.remove:
             if not self.selected_apps:
                 print("No app selected. Stopping installer.")
                 return
             else:
-                self.__remove()
+                self.__remove(no_confirm=args.no_confirm)
 
     def __check_installed_apps(self):
         """
@@ -195,7 +202,7 @@ class JetbrainsManagerTool:
                     "It was not possible to find data for {}".format(APP_LIST[app]["name"])
                 )
 
-    def __install(self, update=False, only_update_data=True, update_mimetypes=False):
+    def __install(self, update=False, only_update_data=True, update_mimetypes=False, no_confirm=False):
         """
         Installs selected apps.
         Updates selected or all installed apps.
@@ -398,20 +405,30 @@ class JetbrainsManagerTool:
                 except Exception as e:
                     print(e)
 
-    def __remove(self):
+    def __remove(self, no_confirm=False):
         """Removes selected apps."""
+
+        # Removal confirmation
+        if not no_confirm:
+            match len(self.selected_apps):
+                case (1):
+                    app_prompt = APP_LIST[self.selected_apps[0]]["name"]
+                case (2):
+                    app_prompt = " and ".join([APP_LIST[app]["name"] for app in self.selected_apps])
+                case _:
+                    app_prompt = ", ".join([APP_LIST[app]["name"] for app in self.selected_apps[:-1]]) + " and " + \
+                                 APP_LIST[self.selected_apps[-1]]["name"]
+
+            confirmation_question = input(
+                "\nAre you sure you want to remove {}? Enter YES for confirmation.\n".format(app_prompt)
+            )
+            if confirmation_question != "YES":
+                print("Cancelling removal.")
+                return
 
         for selected_app in self.selected_apps:
             if selected_app in self.installed_apps.keys():
-                # Removal confirmation
-                confirmation_question = input(
-                    "\nAre you sure you want to remove {}? Enter YES for confirmation.\n".format(
-                        APP_LIST[selected_app]["name"]))
-                if confirmation_question != 'YES':
-                    print("Cancelling removal.")
-                    return
-
-                print("Removing {}...".format(APP_LIST[selected_app]["name"]))
+                print("Removing {}.\n".format(APP_LIST[selected_app]["name"]))
 
                 # Remove directory
                 try:

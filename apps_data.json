@@ -141,7 +141,7 @@
     ]
   },
   "pycharm-community": {
-    "flag": "-y",
+    "flag": "-l",
     "long_flag": "--pycharm-community",
     "help": "PyCharm Community",
     "folder": "pycharm-community",
