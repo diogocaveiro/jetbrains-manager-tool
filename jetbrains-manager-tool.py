@@ -321,10 +321,33 @@ class JetbrainsManagerTool:
             return False
         return True
 
-    def __install(self, update=False, only_update_data=True, update_mimetypes=False, no_confirm=False):
+    def __install(self, update=False, only_update_data=False, update_mimetypes=False, no_confirm=False):
         """
-        Installs selected apps.
-        Updates selected or all installed apps.
+        Install or update the selected applications.
+
+        The method checks whether an application is outdated or not installed, and based on the specified flags,
+        it installs or updates the application accordingly. The application is downloaded from a specified link,
+        extracted, and then the desktop entry, symlink, and execution permissions are set up.
+
+        Parameters:
+        - update (bool): If set to True, the method will attempt to update the specified applications. Default is False.
+        - only_update_data (bool): If set to True, only the data for the applications will be updated without
+                                   re-downloading and re-installing them. Default is False.
+        - update_mimetypes (bool): If set to True, the method will update the MIME types for the specified applications
+                                   in their desktop entry. Default is False.
+        - no_confirm (bool): If set to True, the method will not prompt the user for confirmation. Default is False.
+
+        Attributes accessed:
+        - self.selected_apps (list): List of application keys selected for installation or update.
+        - self.installed_apps (dict): Dictionary mapping installed applications to their versions and build numbers.
+        - self.app_versions (dict): Dictionary mapping application keys to their latest versions and build numbers.
+
+        Note:
+        - The `JETBRAINS_INSTALL_PATH` constant determines where the applications are installed.
+
+        Raises:
+        - Potential OSError, requests.exceptions.RequestException, or other exceptions related to file, directory,
+          and web operations. These exceptions are caught and printed to the console.
         """
 
         # Check outdated applications
