@@ -165,8 +165,8 @@ class JetbrainsManagerTool:
         for key, value in APP_LIST.items():
             install_path = os.path.join(JETBRAINS_INSTALL_PATH, value["folder"])
             if os.path.exists(install_path):
-                with open(os.path.join(install_path, 'product-info.json'), 'r') as json_file:
-                    data = json.load(json_file)
+                with open(os.path.join(install_path, 'product-info.json'), 'r') as product_info_json:
+                    data = json.load(product_info_json)
                     version = data['version']
                     build_number = data['buildNumber']
                 self.installed_apps[key] = [version, build_number]
@@ -530,7 +530,31 @@ class JetbrainsManagerTool:
                     print(e)
 
     def __remove(self, no_confirm=False):
-        """Removes selected apps."""
+        """
+        Remove the selected applications.
+
+        This method performs the removal of applications that are specified in the `self.selected_apps` attribute.
+        Removal involves deleting the installation directory, the associated desktop entry and any symlinks created.
+
+        The method will first prompt the user for confirmation unless the `no_confirm` flag is set to True.
+        For each app, it checks if it's already installed, and if so, it proceeds with the removal process.
+
+        Parameters:
+        - no_confirm (bool): If set to True, the function will not prompt the user for confirmation before
+                             removing apps. Default is False.
+
+        Attributes accessed:
+        - self.selected_apps (list): List of application keys selected for removal.
+        - self.installed_apps (dict): Dictionary mapping installed applications to their versions and build numbers.
+
+        Note:
+        - This method makes use of the `JETBRAINS_INSTALL_PATH` constant to determine where the applications
+          are installed.
+
+        Raises:
+        - Potential OSError or other exceptions related to file and directory operations.
+          These exceptions are caught and printed to the console.
+        """
 
         # Removal confirmation
         if not no_confirm:
@@ -575,7 +599,18 @@ class JetbrainsManagerTool:
 
 
 def request_root_permissions():
-    """Request root permissions."""
+    """
+    Ensure the script is run with root permissions.
+
+    This function checks if the current process has root permissions. If not, it attempts to
+    re-run the script using sudo to gain elevated permissions. If the subprocess fails for any reason,
+    the script will exit with an error code.
+
+    Raises:
+    - SystemExit: This function will exit the script either with an error code (1) if the subprocess fails,
+                  or normally (0) if the subprocess succeeds.
+    """
+
     if os.geteuid() != 0:
         print("This script requires root permissions. Please enter your password.")
         ret = subprocess.call(["sudo", sys.executable] + sys.argv)
