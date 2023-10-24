@@ -202,6 +202,24 @@ class JetbrainsManagerTool:
                     "It was not possible to find data for {}".format(APP_LIST[app]["name"])
                 )
 
+    def __confirmation_prompt(self, job: str, app_list: list) -> bool:
+        match len(app_list):
+            case (1):
+                app_prompt = APP_LIST[self.selected_apps[0]]["name"]
+            case (2):
+                app_prompt = " and ".join([APP_LIST[app]["name"] for app in self.selected_apps])
+            case _:
+                app_prompt = ", ".join([APP_LIST[app]["name"] for app in self.selected_apps[:-1]]) + " and " + \
+                             APP_LIST[self.selected_apps[-1]]["name"]
+
+        confirmation_question = input(
+            "\nAre you sure you want to {} {}? Enter YES for confirmation.\n".format(job, app_prompt)
+        )
+        if confirmation_question != "YES":
+            print("Cancelling removal.")
+            return False
+        return True
+
     def __install(self, update=False, only_update_data=True, update_mimetypes=False, no_confirm=False):
         """
         Installs selected apps.
@@ -410,20 +428,7 @@ class JetbrainsManagerTool:
 
         # Removal confirmation
         if not no_confirm:
-            match len(self.selected_apps):
-                case (1):
-                    app_prompt = APP_LIST[self.selected_apps[0]]["name"]
-                case (2):
-                    app_prompt = " and ".join([APP_LIST[app]["name"] for app in self.selected_apps])
-                case _:
-                    app_prompt = ", ".join([APP_LIST[app]["name"] for app in self.selected_apps[:-1]]) + " and " + \
-                                 APP_LIST[self.selected_apps[-1]]["name"]
-
-            confirmation_question = input(
-                "\nAre you sure you want to remove {}? Enter YES for confirmation.\n".format(app_prompt)
-            )
-            if confirmation_question != "YES":
-                print("Cancelling removal.")
+            if not self.__confirmation_prompt("remove", self.selected_apps):
                 return
 
         for selected_app in self.selected_apps:
