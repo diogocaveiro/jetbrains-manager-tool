@@ -2,7 +2,6 @@
 
 """
 TODO:
-    - Improve documentation
     - Optimize code
 """
 
@@ -27,6 +26,54 @@ JETBRAINS_INSTALL_PATH = "/opt/jetbrains/"
 
 with open('apps_data.json', 'r') as json_file:
     APP_LIST = json.load(json_file)
+
+OPERATION_FLAGS = {
+    "install": [
+        "-i",
+        "--install",
+        "Install mode. Use this flag to install applications.",
+        "store_true",
+    ],
+    "update": [
+        "-u",
+        "--update",
+        "Update mode. Use this flag to update applications.",
+        "store_true",
+    ],
+    "remove": [
+        "-r",
+        "--remove",
+        "Removal mode. Use this flag to remove applications.",
+        "store_true",
+    ]
+}
+
+CONFIGURATION_FLAGS = {
+    "directory": [
+        "-d",
+        "--directory",
+        "Set the directory for JetBrains' applications.",
+        "store_true",
+    ],
+    "only_update_data": [
+        "-z",
+        "--only-update-data",
+        "Update application menu and symlinks only.",
+        "store_true",
+    ],
+    "update_mimetypes": [
+        "-v",
+        "--update-mimetypes",
+        "Update mimetypes.",
+        "store_true",
+    ],
+    "no_confirm": [
+        "-y",
+        "--no-confirm",
+        "Do not ask for confirmation.",
+        "store_true",
+    ]
+}
 
 
 def check_redirect(url, max_redirects=5) -> int | None:
@@ -67,40 +114,20 @@ class JetbrainsManagerTool:
         exclusive_group = arg_parser.add_mutually_exclusive_group(required=True)
 
         # Operation flags
-        exclusive_group.add_argument(
-            "-u", "--update", action="store_true", help="Update mode."
-        )
-        exclusive_group.add_argument(
-            "-i", "--install", action="store_true", help="Install mode."
-        )
-        exclusive_group.add_argument(
-            "-r", "--remove", action="store_true", help="Removal mode."
-        )
+        for operation in OPERATION_FLAGS.values():
+            exclusive_group.add_argument(
+                operation[0], operation[1], action=operation[3], help=operation[2]
+            )
 
         # Application flags
         for app in APP_LIST.values():
             arg_parser.add_argument(app["flag"], action="store_true", help=app["help"])
 
-        # Configuration flags
-        arg_parser.add_argument("-d",
-                                "--directory",
-                                type=lambda path: os.makedirs(path, exist_ok=True) or path,
-                                help="Set the directory for JetBrains' applications.")
-
-        arg_parser.add_argument("-z",
-                                "--only-update-data",
-                                action="store_true",
-                                help="Update application menu and symlinks only.")
-
-        arg_parser.add_argument("-v",
-                                "--update-mimetypes",
-                                action="store_true",
-                                help="Update mimetypes.")
-
-        arg_parser.add_argument("-y",
-                                "--no-confirm",
-                                action="store_true",
-                                help="Do not ask for confirmation.")
+        # Configuration flags/arguments
+        for operation in CONFIGURATION_FLAGS.values():
+            arg_parser.add_argument(
+                operation[0], operation[1], action=operation[3], help=operation[2]
+            )
 
         args = arg_parser.parse_args()
 
@@ -123,7 +150,7 @@ class JetbrainsManagerTool:
         # Fetch JetBrains XML file
         self.__fetch_xml()
 
-        # Install, update or removal mode
+        # Set operation (install, update, remove)
         if args.install:
             if not self.selected_apps:
                 print("No app selected. Stopping installer.")
