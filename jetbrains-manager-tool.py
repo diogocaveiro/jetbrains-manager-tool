@@ -246,6 +246,11 @@ class JetbrainsManagerTool:
             self.__get_current_versions(list(self.selected_apps))
             install_process_apps = self.selected_apps
 
+        # Confirmation
+        if not no_confirm:
+            if not self.__confirmation_prompt("update" if update else "install", self.selected_apps):
+                return
+
         # Install process
         for selected_app in install_process_apps:
             print("\n{} {}...".format("Updating" if update else "Installing", APP_LIST[selected_app]["name"]))
