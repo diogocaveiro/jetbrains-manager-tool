@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 
+"""
+TODO:
+    - Improve documentation
+    - Optimize code
+"""
+
 import shutil
 import requests
 import argparse
@@ -23,8 +29,26 @@ with open('apps_data.json', 'r') as json_file:
     APP_LIST = json.load(json_file)
 
 
-def check_redirect(url, max_redirects=5):
-    """Check the final status code after following redirects."""
+def check_redirect(url, max_redirects=5) -> int | None:
+    """
+    Check the final status code of a URL after potentially following a series of redirects.
+
+    The function uses the HTTP HEAD method to iteratively follow redirects up to a maximum
+    specified by `max_redirects`. If the maximum number of redirects is reached without arriving
+    at a non-redirect status code, the function returns `None`.
+
+    Parameters:
+    - url (str): The initial URL to check.
+    - max_redirects (int, optional): The maximum number of redirects to follow. Defaults to 5.
+
+    Returns:
+    - int or None: The HTTP status code of the final destination after following redirects. If the
+      maximum number of redirects is exceeded, returns `None`.
+
+    Notes:
+    - Only 301 and 302 status codes are treated as redirects.
+    """
+
     for _ in range(max_redirects):
         response = requests.head(url, allow_redirects=False)
         if response.status_code in (301, 302):
@@ -119,7 +143,21 @@ class JetbrainsManagerTool:
 
     def __check_installed_apps(self):
         """
-        Checks installed applications and its versions.
+        Check and identify installed JetBrains applications along with their versions.
+
+        This method scans a predefined installation directory (specified by JETBRAINS_INSTALL_PATH) for any
+        JetBrains applications listed in the APP_LIST. For each detected application, it retrieves the version
+        and build number from the 'product-info.json' file located within the application's folder.
+
+        The information about installed applications is stored in the instance variable `self.installed_apps` in the
+        form: {<app_key>: [<version>, <build_number>], ...}
+
+        After checking all applications, the method prints a list of installed apps and their descriptions to the
+        console. If no applications are detected in the installation path, a message is printed indicating the
+        absence of installed apps.
+
+        Attributes updated:
+        - self.installed_apps (dict): A dictionary mapping app keys to their respective versions and build numbers.
         """
 
         # Check installed applications
@@ -145,7 +183,28 @@ class JetbrainsManagerTool:
             print("No app installed in the designated install folder.")
 
     def __fetch_xml(self):
-        """Fetch XML file."""
+        """
+        Fetch XML files from JetBrains and Android Studio URLs and combine them.
+
+        This method performs the following tasks:
+        1. Fetches the XML file from the JetBrains URL.
+        2. Fetches the XML file from the Android Studio URL.
+        3. Appends the contents of the Android Studio XML into the JetBrains XML.
+        4. Stores the combined XML content into the instance variable `self.xml_file`.
+
+        If any step fails (e.g., the request returns a non-200 status code or parsing issues occur),
+        an exception is raised and the error message is printed to the console.
+
+        Note:
+        - The URLs JETBRAINS_XML_URL and ANDROID_STUDIO_XML_URL should be set correctly before calling this method.
+        - The combined XML content will be stored as a bytes string in the `self.xml_file` attribute.
+
+        Attributes updated:
+        - self.xml_file (bytes): Combined XML content from both JetBrains and Android Studio.
+
+        Raises:
+        - Various exceptions, including potential HTTP errors and XML parsing errors. Errors are printed to the console.
+        """
 
         try:
             # Fetch Jetbrains XML file
@@ -175,7 +234,27 @@ class JetbrainsManagerTool:
             print(e)
 
     def __get_current_versions(self, list_of_apps: list):
-        """Fetch installed applications' versions."""
+        """
+        Fetch and store the current versions of specified applications from the XML content.
+
+        This method processes the XML content stored in `self.xml_file` to extract the version and build number
+        of each application specified in `list_of_apps`. The data is then stored in the `self.app_versions` dictionary.
+
+        The method specifically looks for product entries in the XML and fetches the associated build details.
+        For Android Studio, special handling is done to extract the version and build number correctly.
+
+        Parameters:
+        - list_of_apps (list): A list of application keys (e.g., ['android-studio', 'pycharm']) for which the
+                               versions need to be fetched.
+
+        Attributes updated:
+        - self.app_versions (dict): A dictionary mapping application keys to their respective versions
+                                    and build numbers in the form: {<app_key>: [<version>, <build_number>], ...}
+
+        Raises:
+        - Potential XML parsing errors. If the version data for an application is not found in the XML,
+          a message will be printed to the console.
+        """
 
         root = elementTree.fromstring(self.xml_file)
         self.app_versions = {}
@@ -203,6 +282,28 @@ class JetbrainsManagerTool:
                 )
 
     def __confirmation_prompt(self, job: str, app_list: list) -> bool:
+        """
+        Display a user confirmation prompt for a given job on a list of applications.
+
+        This method constructs a formatted prompt based on the given job ('install', 'remove' and 'update') and
+        the names of applications in `app_list`. Depending on the number of applications, the prompt uses
+        appropriate conjunctions (like "and") to create a readable message. After constructing the prompt,
+        the method requests user confirmation by asking them to enter "YES".
+
+        Parameters:
+        - job (str): The action to be confirmed ('install', 'remove', 'update').
+        - app_list (list): A list of application keys (e.g., ['android-studio', 'pycharm']) for which the
+                           confirmation is being sought.
+
+        Returns:
+        - bool: True if the user confirms with "YES", otherwise False.
+
+        Note:
+        - The method is case-sensitive and requires the user to enter "YES" in uppercase for confirmation.
+
+        Raises:
+        - Potential KeyErrors if an app from app_list doesn't exist in the global APP_LIST.
+        """
         match len(app_list):
             case (1):
                 app_prompt = APP_LIST[self.selected_apps[0]]["name"]
