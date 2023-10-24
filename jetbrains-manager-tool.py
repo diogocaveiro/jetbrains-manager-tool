@@ -1,12 +1,5 @@
 #!/usr/bin/env python
 
-"""
-    TODO:
-        - Update mimeapps.list
-    TESTING:
-        - Update all / selected apps
-"""
-
 import shutil
 import requests
 import argparse
@@ -15,6 +8,12 @@ import subprocess
 import sys
 import xml.etree.ElementTree as elementTree
 import json
+
+__author__ = "Diogo Caveiro"
+__date__ = "2023-10-24"
+__version__ = "1.0.0"
+__github__ = "https://github.com/diogocaveiro"
+__license__ = "GPLv3 License"
 
 JETBRAINS_XML_URL = "https://www.jetbrains.com/updates/updates.xml"
 ANDROID_STUDIO_XML_URL = "https://dl.google.com/android/studio/patches/updates.xml"
