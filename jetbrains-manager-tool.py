@@ -3,7 +3,7 @@
 """
 TODO:
     - Optimize code
-    - Streamline flags / arguments
+    - Streamline flags / arguments (uppercase apps?)
 """
 
 import shutil
@@ -17,7 +17,7 @@ import json
 
 __author__ = "Diogo Caveiro"
 __date__ = "2023-10-24"
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 __github__ = "https://github.com/diogocaveiro"
 __license__ = "GPLv3 License"
 
@@ -334,12 +334,12 @@ class JetbrainsManagerTool:
         """
         match len(app_list):
             case (1):
-                app_prompt = APP_LIST[self.selected_apps[0]]["name"]
+                app_prompt = APP_LIST[app_list[0]]["name"]
             case (2):
-                app_prompt = " and ".join([APP_LIST[app]["name"] for app in self.selected_apps])
+                app_prompt = " and ".join([APP_LIST[app]["name"] for app in app_list])
             case _:
-                app_prompt = ", ".join([APP_LIST[app]["name"] for app in self.selected_apps[:-1]]) + " and " + \
-                             APP_LIST[self.selected_apps[-1]]["name"]
+                app_prompt = ", ".join([APP_LIST[app]["name"] for app in app_list[:-1]]) + " and " + \
+                             APP_LIST[app_list[-1]]["name"]
 
         confirmation_question = input(
             "\nAre you sure you want to {} {}? Enter YES for confirmation.\n".format(job, app_prompt)
@@ -400,7 +400,7 @@ class JetbrainsManagerTool:
 
         # Confirmation
         if not no_confirm:
-            if not self.__confirmation_prompt("update" if update else "install", self.selected_apps):
+            if not self.__confirmation_prompt("update" if update else "install", install_process_apps):
                 return
 
         # Install process

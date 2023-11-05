@@ -66,16 +66,17 @@ This command will remove PyCharm Professional and DataGrip.
 
 ### Configuration Flags
 
-| Configuration     | Short Flag | Long Flag                 | Description                                                         |
-|:------------------|:----------:|:--------------------------|:--------------------------------------------------------------------|
-| Install directory |    `-d`    | `--directory [directory]` | Set custom directory.                                               |
-| Only update data  |    `-z`    | `--only-update-data`      | Update application menu and symlinks only.                          |
-| Update mimetypes  |    `-v`    | `--update-mimetypes`      | Update application mimetypes.                                       |
+| Configuration     | Short Flag | Long Flag            | Description                                                         |
+|:------------------|:----------:|:---------------------|:--------------------------------------------------------------------|
+| Only update data  |    `-z`    | `--only-update-data` | Update application menu and symlinks only.                          |
+| Update mimetypes  |    `-v`    | `--update-mimetypes` | Update application mimetypes.                                       |
+| No confirm        |    `-y`    | `--no-confirm`       | Do not ask for confirmation.                                        |
+
 
 ### Configuration Arguments
-| Configuration     | Short Flag | Long Flag                 | Description                                                         |
-|:------------------|:----------:|:--------------------------|:--------------------------------------------------------------------|
-| No confirm        |    `-y`    | `--no-confirm`            | Do not ask for confirmation.                                        |
+| Configuration     |    Short Flag    | Long Flag                 | Description                                                |
+|:------------------|:----------------:|:--------------------------|:-----------------------------------------------------------|
+| Install directory | `-d [directory]` | `--directory [directory]` | Set custom directory.                                      |
 
 
 ## Disclaimer of Liability
