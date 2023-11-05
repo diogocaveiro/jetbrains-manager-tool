@@ -46,23 +46,23 @@ This command will remove PyCharm Professional and DataGrip.
 
 | Application               | Short Flag | Long Flag                | Description                                               |
 |:--------------------------|:----------:|:-------------------------|:----------------------------------------------------------|
-| Android Studio            |    `-t`    | `--android-studio`       | An IDE for Android app development.                       |
-| AppCode                   |    `-a`    | `--appcode`              | Smart IDE for iOS/macOS development.                      |
-| AquaCode                  |    `-q`    | `--aquacode`             | A powerful IDE for test automation.                       |
-| CLion                     |    `-c`    | `--clion`                | A cross-platform IDE for C and C++.                       |
-| DataGrip                  |    `-j`    | `--datagrip`             | Your Swiss Army Knife for Databases and SQL.              |
-| DataSpell                 |    `-s`    | `--dataspell`            | The data science IDE.                                     |
-| GoLand                    |    `-g`    | `--goland`               | A Clever IDE to Go.                                       |
-| IntelliJ IDEA Community   |    `-n`    | `--intellij-community`   | The IDE for pure Java and Kotlin development.             |
-| IntelliJ IDEA Ultimate    |    `-m`    | `--intellij-ultimate`    | The Leading Java and Kotlin IDE                           |
-| PhpStorm                  |    `-k`    | `--phpstorm`             | The Lightning-Smart IDE for PHP Programming by JetBrains. |
-| PyCharm Community         |    `-l`    | `--pycharm-community`    | The Python IDE for Professional Developers.               |
-| PyCharm Edu               |    `-e`    | `--pycharm-edu`          | The Python IDE for Professional Developers.               |
-| PyCharm Professional      |    `-p`    | `--pycharm-professional` | The full stack Python IDE.                                |
-| Rider                     |    `-x`    | `--rider`                | Cross-platform .NET IDE based on IntelliJ and ReSharper.  |
-| RubyMine                  |    `-b`    | `--rubymine`             | The Most Intelligent Ruby and Rails IDE.                  |
-| RustRover                 |    `-o`    | `--rustrover`            | The IDE for Rust.                                         |
-| WebStorm                  |    `-w`    | `--webstorm`             | The Smartest JavaScript IDE.                              |
+| Android Studio            |    `-A`    | `--android-studio`       | An IDE for Android app development.                       |
+| AppCode                   |    `-O`    | `--appcode`              | Smart IDE for iOS/macOS development.                      |
+| AquaCode                  |    `-Q`    | `--aquacode`             | A powerful IDE for test automation.                       |
+| CLion                     |    `-C`    | `--clion`                | A cross-platform IDE for C and C++.                       |
+| DataGrip                  |    `-S`    | `--datagrip`             | Your Swiss Army Knife for Databases and SQL.              |
+| DataSpell                 |    `-D`    | `--dataspell`            | The data science IDE.                                     |
+| GoLand                    |    `-G`    | `--goland`               | A Clever IDE to Go.                                       |
+| IntelliJ IDEA Community   |    `-I`    | `--intellij-community`   | The IDE for pure Java and Kotlin development.             |
+| IntelliJ IDEA Ultimate    |    `-U`    | `--intellij-ultimate`    | The Leading Java and Kotlin IDE                           |
+| PhpStorm                  |    `-H`    | `--phpstorm`             | The Lightning-Smart IDE for PHP Programming by JetBrains. |
+| PyCharm Community         |    `-P`    | `--pycharm-community`    | The Python IDE for Professional Developers.               |
+| PyCharm Edu               |    `-E`    | `--pycharm-edu`          | The Python IDE for Professional Developers.               |
+| PyCharm Professional      |    `-Y`    | `--pycharm-professional` | The full stack Python IDE.                                |
+| Rider                     |    `-M`    | `--rider`                | Cross-platform .NET IDE based on IntelliJ and ReSharper.  |
+| RubyMine                  |    `-B`    | `--rubymine`             | The Most Intelligent Ruby and Rails IDE.                  |
+| RustRover                 |    `-R`    | `--rustrover`            | The IDE for Rust.                                         |
+| WebStorm                  |    `-W`    | `--webstorm`             | The Smartest JavaScript IDE.                              |
 
 ### Configuration Flags
 

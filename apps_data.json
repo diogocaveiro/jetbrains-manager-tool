@@ -1,6 +1,6 @@
 {
   "android-studio": {
-    "flag": "-t",
+    "flag": "-A",
     "long_flag": "--android-studio",
     "help": "Android Studio",
     "folder": "android-studio",
@@ -18,7 +18,7 @@
     ]
   },
   "pycharm-professional": {
-    "flag": "-p",
+    "flag": "-Y",
     "long_flag": "--pycharm-professional",
     "help": "PyCharm Professional",
     "folder": "pycharm-professional",
@@ -36,7 +36,7 @@
     ]
   },
   "clion": {
-    "flag": "-c",
+    "flag": "-C",
     "long_flag": "--clion",
     "help": "CLion",
     "folder": "clion",
@@ -55,7 +55,7 @@
     ]
   },
   "datagrip": {
-    "flag": "-j",
+    "flag": "-S",
     "long_flag": "--datagrip",
     "help": "DataGrip",
     "folder": "datagrip",
@@ -73,7 +73,7 @@
     ]
   },
   "goland": {
-    "flag": "-g",
+    "flag": "-G",
     "long_flag": "--goland",
     "help": "GoLand",
     "folder": "goland",
@@ -88,7 +88,7 @@
     ]
   },
   "intellij-community": {
-    "flag": "-n",
+    "flag": "-I",
     "long_flag": "--intellij-community",
     "help": "IntelliJ IDEA Community",
     "folder": "ideaIC",
@@ -106,7 +106,7 @@
     ]
   },
   "intellij-ultimate": {
-    "flag": "-m",
+    "flag": "-U",
     "long_flag": "--intellij-ultimate",
     "help": "IntelliJ IDEA Ultimate",
     "folder": "ideaIU",
@@ -124,7 +124,7 @@
     ]
   },
   "phpstorm": {
-    "flag": "-k",
+    "flag": "-H",
     "long_flag": "--phpstorm",
     "help": "PhpStorm",
     "folder": "phpstorm",
@@ -141,7 +141,7 @@
     ]
   },
   "pycharm-community": {
-    "flag": "-l",
+    "flag": "-P",
     "long_flag": "--pycharm-community",
     "help": "PyCharm Community",
     "folder": "pycharm-community",
@@ -159,7 +159,7 @@
     ]
   },
   "pycharm-edu": {
-    "flag": "-e",
+    "flag": "-E",
     "long_flag": "--pycharm-edu",
     "help": "PyCharm Edu",
     "folder": "pycharm-edu",
@@ -177,7 +177,7 @@
     ]
   },
   "rider": {
-    "flag": "-x",
+    "flag": "-M",
     "long_flag": "--rider",
     "help": "Rider",
     "folder": "rider",
@@ -206,7 +206,7 @@
     ]
   },
   "rubymine": {
-    "flag": "-b",
+    "flag": "-B",
     "long_flag": "--rubymine",
     "help": "RubyMine",
     "folder": "rubymine",
@@ -223,7 +223,7 @@
     ]
   },
   "webstorm": {
-    "flag": "-w",
+    "flag": "-W",
     "long_flag": "--webstorm",
     "help": "WebStorm",
     "folder": "webstorm",
@@ -254,7 +254,7 @@
     ]
   },
   "appcode": {
-    "flag": "-a",
+    "flag": "-O",
     "long_flag": "--appcode",
     "help": "AppCode",
     "folder": "appcode",
@@ -272,7 +272,7 @@
     ]
   },
   "aquacode": {
-    "flag": "-q",
+    "flag": "-Q",
     "long_flag": "--aquacode",
     "help": "AquaCode",
     "folder": "aquacode",
@@ -290,7 +290,7 @@
     ]
   },
   "dataspell": {
-    "flag": "-s",
+    "flag": "-D",
     "long_flag": "--dataspell",
     "help": "DataSpell",
     "folder": "dataspell",
@@ -305,7 +305,7 @@
     ]
   },
   "rustrover": {
-    "flag": "-o",
+    "flag": "-R",
     "long_flag": "--rustrover",
     "help": "RustRover",
     "folder": "rustrover",
