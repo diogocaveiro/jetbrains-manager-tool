@@ -426,7 +426,7 @@ class JetbrainsManagerTool:
                 if selected_app == "android-studio":
                     valid_link_found = False
                     for suffix in reversed(range(1, 30)):
-                        last_version_try = self.app_versions['android_studio'][0] + "." + str(suffix)
+                        last_version_try = self.app_versions['android-studio'][0] + "." + str(suffix)
                         temp_link = APP_LIST[selected_app]["download-link"].replace(
                             "<VERSION>", last_version_try
                         )
