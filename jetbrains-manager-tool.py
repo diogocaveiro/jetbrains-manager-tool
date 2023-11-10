@@ -504,12 +504,12 @@ class JetbrainsManagerTool:
                     f.write("[Desktop Entry]\n")
                     f.write("Name={}\n".format(APP_LIST[selected_app]["help"]))
                     f.write(
-                        "Exec={}/bin/{}.sh\n".format(
+                        "Icon={}/bin/{}.svg\n".format(
                             install_path, APP_LIST[selected_app]["executable"]
                         )
                     )
                     f.write(
-                        "Icon={}/bin/{}.png\n".format(
+                        'Exec="{}/bin/{}.sh" %f\n'.format(
                             install_path, APP_LIST[selected_app]["executable"]
                         )
                     )
