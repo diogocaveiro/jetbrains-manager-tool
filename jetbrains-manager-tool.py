@@ -450,7 +450,7 @@ class JetbrainsManagerTool:
 
                 print(f"Downloading {APP_LIST[selected_app]['name']} from {download_link}")
                 download_path = os.path.join(
-                    os.getcwd(),
+                    "/tmp",
                     "{}-{}.tar.gz".format(APP_LIST[selected_app]["name"], self.app_versions[selected_app][0]),
                 )
 
