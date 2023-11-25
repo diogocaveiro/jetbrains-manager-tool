@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 
-"""
-TODO:
-    - Optimize code
-    - Streamline flags / arguments (uppercase apps?)
-"""
 
 import shutil
 import requests
@@ -334,12 +329,12 @@ class JetbrainsManagerTool:
         """
         match len(app_list):
             case (1):
-                app_prompt = APP_LIST[app_list[0]]["name"]
+                app_prompt = APP_LIST[app_list[0]]["help"]
             case (2):
-                app_prompt = " and ".join([APP_LIST[app]["name"] for app in app_list])
+                app_prompt = " and ".join([APP_LIST[app]["help"] for app in app_list])
             case _:
-                app_prompt = ", ".join([APP_LIST[app]["name"] for app in app_list[:-1]]) + " and " + \
-                             APP_LIST[app_list[-1]]["name"]
+                app_prompt = ", ".join([APP_LIST[app]["help"] for app in app_list[:-1]]) + " and " + \
+                             APP_LIST[app_list[-1]]["help"]
 
         confirmation_question = input(
             "\nAre you sure you want to {} {}? Enter YES for confirmation.\n".format(job, app_prompt)
@@ -619,7 +614,8 @@ class JetbrainsManagerTool:
                 # Remove directory
                 try:
                     install_path = os.path.join(JETBRAINS_INSTALL_PATH, APP_LIST[selected_app]["folder"])
-                    print(install_path)
+                    shutil.rmtree(install_path)
+                    print(f'Removed directory: {install_path}')
 
                 except Exception as e:
                     print(e)
