@@ -3,6 +3,7 @@
 """
 TODO:
  - System logs
+ - Package for V0.2
 """
 
 import shutil
