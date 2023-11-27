@@ -17,7 +17,7 @@ import json
 
 __author__ = "Diogo Caveiro"
 __date__ = "2023-10-24"
-__version__ = "0.2.1"
+__version__ = "0.1.0"
 __github__ = "https://github.com/diogocaveiro"
 __license__ = "GPLv3 License"
 
