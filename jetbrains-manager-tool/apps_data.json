@@ -1,0 +1,323 @@
+{
+  "android-studio": {
+    "flag": "-A",
+    "long_flag": "--android-studio",
+    "help": "Android Studio",
+    "folder": "android-studio",
+    "name": "Android Studio",
+    "channel_name": "Android Studio updates",
+    "download-link": "https://redirector.gvt1.com/edgedl/android/studio/ide-zips/<VERSION>/android-studio-<VERSION>-linux.tar.gz",
+    "comment": "An IDE for Android app development",
+    "executable": "studio",
+    "wm_class": "jetbrains-studio",
+    "mimetype": [
+      "application/java-archive",
+      "application/x-java-archive",
+      "application/x-jar",
+      "application/x-kotlin-jar"
+    ]
+  },
+  "pycharm-professional": {
+    "flag": "-Y",
+    "long_flag": "--pycharm-professional",
+    "help": "PyCharm Professional",
+    "folder": "pycharm-professional",
+    "name": "PyCharm",
+    "channel_name": "PyCharm RELEASE",
+    "download-link": "https://download.jetbrains.com/python/pycharm-professional-<VERSION>.tar.gz",
+    "comment": "The full stack Python IDE",
+    "executable": "pycharm",
+    "wm_class": "jetbrains-pycharm",
+    "mimetype": [
+      "application/x-python-bytecode",
+      "application/x-python-code",
+      "application/x-python-script",
+      "text/x-python"
+    ]
+  },
+  "clion": {
+    "flag": "-C",
+    "long_flag": "--clion",
+    "help": "CLion",
+    "folder": "clion",
+    "name": "CLion",
+    "channel_name": "CLion RELEASE",
+    "download-link": "https://download.jetbrains.com/cpp/CLion-<VERSION>.tar.gz",
+    "comment": "A cross-platform IDE for C and C++",
+    "executable": "clion",
+    "wm_class": "jetbrains-clion",
+    "mimetype": [
+      "text/x-c",
+      "text/x-c++",
+      "text/x-c++src",
+      "text/x-chdr",
+      "text/x-csrc"
+    ]
+  },
+  "datagrip": {
+    "flag": "-S",
+    "long_flag": "--datagrip",
+    "help": "DataGrip",
+    "folder": "datagrip",
+    "name": "DataGrip",
+    "channel_name": "DataGrip RELEASE",
+    "download-link": "https://download.jetbrains.com/datagrip/datagrip-<VERSION>.tar.gz",
+    "comment": "Your Swiss Army Knife for Databases and SQL",
+    "executable": "datagrip",
+    "wm_class": "jetbrains-datagrip",
+    "mimetype": [
+      "application/sql",
+      "application/x-sql",
+      "text/sql",
+      "text/x-sql"
+    ]
+  },
+  "goland": {
+    "flag": "-G",
+    "long_flag": "--goland",
+    "help": "GoLand",
+    "folder": "goland",
+    "name": "GoLand",
+    "channel_name": "GoLand RELEASE",
+    "download-link": "https://download.jetbrains.com/go/goland-<VERSION>.tar.gz",
+    "comment": "A Clever IDE to Go",
+    "executable": "goland",
+    "wm_class": "jetbrains-goland",
+    "mimetype": [
+      "text/x-go"
+    ]
+  },
+  "intellij-community": {
+    "flag": "-I",
+    "long_flag": "--intellij-community",
+    "help": "IntelliJ IDEA Community",
+    "folder": "ideaIC",
+    "name": "IntelliJ IDEA",
+    "channel_name": "IntelliJ IDEA RELEASE",
+    "download-link": "https://download.jetbrains.com/idea/ideaIC-<VERSION>.tar.gz",
+    "comment": "The IDE for pure Java and Kotlin development",
+    "executable": "idea",
+    "wm_class": "jetbrains-idea",
+    "mimetype": [
+      "application/java-archive",
+      "application/x-java-archive",
+      "application/x-jar",
+      "application/x-kotlin-jar"
+    ]
+  },
+  "intellij-ultimate": {
+    "flag": "-U",
+    "long_flag": "--intellij-ultimate",
+    "help": "IntelliJ IDEA Ultimate",
+    "folder": "ideaIU",
+    "name": "IntelliJ IDEA",
+    "channel_name": "IntelliJ IDEA RELEASE",
+    "download-link": "https://download.jetbrains.com/idea/ideaIU-<VERSION>.tar.gz",
+    "comment": "The Leading Java and Kotlin IDE",
+    "executable": "idea",
+    "wm_class": "jetbrains-idea",
+    "mimetype": [
+      "application/java-archive",
+      "application/x-java-archive",
+      "application/x-jar",
+      "application/x-kotlin-jar"
+    ]
+  },
+  "phpstorm": {
+    "flag": "-H",
+    "long_flag": "--phpstorm",
+    "help": "PhpStorm",
+    "folder": "phpstorm",
+    "name": "PhpStorm",
+    "channel_name": "PhpStorm RELEASE",
+    "download-link": "https://download.jetbrains.com/webide/PhpStorm-<VERSION>.tar.gz",
+    "comment": "The Lightning-Smart IDE for PHP Programming",
+    "executable": "phpstorm",
+    "wm_class": "jetbrains-phpstorm",
+    "mimetype": [
+      "application/x-php",
+      "application/x-php-source",
+      "text/x-php"
+    ]
+  },
+  "pycharm-community": {
+    "flag": "-P",
+    "long_flag": "--pycharm-community",
+    "help": "PyCharm Community",
+    "folder": "pycharm-community",
+    "name": "PyCharm Community",
+    "channel_name": "PyCharm RELEASE",
+    "download-link": "https://download.jetbrains.com/python/pycharm-community-<VERSION>.tar.gz",
+    "comment": "The Python IDE for Professional Developers",
+    "executable": "pycharm",
+    "wm_class": "jetbrains-pycharm",
+    "mimetype": [
+      "application/x-python-bytecode",
+      "application/x-python-code",
+      "application/x-python-script",
+      "text/x-python"
+    ]
+  },
+  "pycharm-edu": {
+    "flag": "-E",
+    "long_flag": "--pycharm-edu",
+    "help": "PyCharm Edu",
+    "folder": "pycharm-edu",
+    "name": "PyCharm Edu",
+    "channel_name": "PyCharm Edu RELEASE",
+    "download-link": "https://download.jetbrains.com/python/pycharm-edu-<VERSION>.tar.gz",
+    "comment": "The Python IDE for Professional Developers",
+    "executable": "pycharm",
+    "wm_class": "jetbrains-pycharm",
+    "mimetype": [
+      "application/x-python-bytecode",
+      "application/x-python-code",
+      "application/x-python-script",
+      "text/x-python"
+    ]
+  },
+  "rider": {
+    "flag": "-M",
+    "long_flag": "--rider",
+    "help": "Rider",
+    "folder": "rider",
+    "name": "Rider",
+    "channel_name": "Rider RELEASE",
+    "download-link": "https://download.jetbrains.com/rider/JetBrains.Rider-<VERSION>.tar.gz",
+    "comment": "Cross-platform .NET IDE based on IntelliJ platform and ReSharper",
+    "executable": "rider",
+    "wm_class": "jetbrains-rider",
+    "mimetype": [
+      "application/x-dotnet",
+      "application/x-dotnet-assemblies",
+      "application/x-dotnet-assemblies-dep",
+      "application/x-dotnet-assemblies-dep-src",
+      "application/x-dotnet-assemblies-src",
+      "application/x-dotnet-dll",
+      "application/x-dotnet-dll-config",
+      "application/x-dotnet-dll-data",
+      "application/x-dotnet-dll-data-config",
+      "application/x-dotnet-dll-data-src",
+      "application/x-dotnet-dll-src",
+      "application/x-dotnet-exe",
+      "application/x-dotnet-exe-config",
+      "application/x-dotnet-exe-src",
+      "application/x-dotnet-src"
+    ]
+  },
+  "rubymine": {
+    "flag": "-B",
+    "long_flag": "--rubymine",
+    "help": "RubyMine",
+    "folder": "rubymine",
+    "name": "RubyMine",
+    "channel_name": "RubyMine RELEASE",
+    "download-link": "https://download.jetbrains.com/ruby/RubyMine-<VERSION>.tar.gz",
+    "comment": "The Most Intelligent Ruby and Rails IDE",
+    "executable": "rubymine",
+    "wm_class": "jetbrains-rubymine",
+    "mimetype": [
+      "application/x-ruby",
+      "application/x-ruby-script",
+      "text/x-ruby"
+    ]
+  },
+  "webstorm": {
+    "flag": "-W",
+    "long_flag": "--webstorm",
+    "help": "WebStorm",
+    "folder": "webstorm",
+    "name": "WebStorm",
+    "channel_name": "WebStorm RELEASE",
+    "download-link": "https://download.jetbrains.com/webstorm/WebStorm-<VERSION>.tar.gz",
+    "comment": "The Smartest JavaScript IDE",
+    "executable": "webstorm",
+    "wm_class": "jetbrains-webstorm",
+    "mimetype": [
+      "application/javascript",
+      "application/x-javascript",
+      "text/javascript",
+      "text/x-javascript",
+      "text/x-js",
+      "text/x-mjs",
+      "text/x-vue",
+      "text/vue",
+      "text/html",
+      "application/xhtml+xml",
+      "text/css",
+      "text/x-scss",
+      "text/x-less",
+      "text/jsx",
+      "text/tsx",
+      "text/typescript",
+      "application/typescript"
+    ]
+  },
+  "appcode": {
+    "flag": "-O",
+    "long_flag": "--appcode",
+    "help": "AppCode",
+    "folder": "appcode",
+    "name": "AppCode",
+    "channel_name": "AppCode RELEASE",
+    "download-link": "https://download.jetbrains.com/objc/AppCode-<VERSION>.tar.gz",
+    "comment": "Smart IDE for iOS/macOS development",
+    "executable": "appcode",
+    "wm_class": "jetbrains-appcode",
+    "mimetype": [
+      "application/x-objective-c",
+      "application/x-objective-c++",
+      "text/x-objective-c",
+      "text/x-objective-c++"
+    ]
+  },
+  "aquacode": {
+    "flag": "-Q",
+    "long_flag": "--aquacode",
+    "help": "AquaCode",
+    "folder": "aquacode",
+    "name": "AquaCode",
+    "channel_name": "AquaCode RELEASE",
+    "download-link": "https://download.jetbrains.com/aquacode/AquaCode-<VERSION>.tar.gz",
+    "comment": "A powerful IDE for test automation",
+    "executable": "aquacode",
+    "wm_class": "jetbrains-aquacode",
+    "mimetype": [
+      "application/x-objective-c",
+      "application/x-objective-c++",
+      "text/x-objective-c",
+      "text/x-objective-c++"
+    ]
+  },
+  "dataspell": {
+    "flag": "-D",
+    "long_flag": "--dataspell",
+    "help": "DataSpell",
+    "folder": "dataspell",
+    "name": "DataSpell",
+    "channel_name": "DataSpell RELEASE",
+    "download-link": "https://download.jetbrains.com/python/dataspell-<VERSION>.tar.gz",
+    "comment": "The data science IDE",
+    "executable": "dataspell",
+    "wm_class": "jetbrains-dataspell",
+    "mimetype": [
+      "application/x-ipynb+json"
+    ]
+  },
+  "rustrover": {
+    "flag": "-R",
+    "long_flag": "--rustrover",
+    "help": "RustRover",
+    "folder": "rustrover",
+    "name": "RustRover",
+    "channel_name": "RustRover RELEASE",
+    "download-link": "https://download.jetbrains.com/rustrover/RustRover-<VERSION>.tar.gz",
+    "comment": "The IDE for Rust",
+    "executable": "rustrover",
+    "wm_class": "jetbrains-rustrover",
+    "mimetype": [
+      "text/x-rustsrc",
+      "text/x-rust"
+    ]
+  }
+}

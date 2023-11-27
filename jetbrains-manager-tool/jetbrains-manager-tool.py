@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 
+"""
+TODO:
+ - System logs
+ - Verbose mode
+ - Optimize root permissions
+"""
 
 import shutil
 import requests
