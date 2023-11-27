@@ -3,8 +3,6 @@
 """
 TODO:
  - System logs
- - Verbose mode
- - Optimize root permissions
 """
 
 import shutil
@@ -64,7 +62,7 @@ CONFIGURATION_FLAGS = {
         "store_true",
     ],
     "update_mimetypes": [
-        "-v",
+        "-m",
         "--update-mimetypes",
         "Update mimetypes.",
         "store_true",
@@ -74,7 +72,13 @@ CONFIGURATION_FLAGS = {
         "--no-confirm",
         "Do not ask for confirmation.",
         "store_true",
-    ]
+    ],
+    "verbose": [
+        "-v",
+        "--verbose",
+        "Verbose mode.",
+        "store_true",
+    ],
 }
 
 
@@ -132,6 +136,9 @@ class JetbrainsManagerTool:
             )
 
         args = arg_parser.parse_args()
+
+        # Verbose mode
+        self.verbose = True if args.verbose else False
 
         # Change default directory
         if args.directory:
@@ -201,14 +208,14 @@ class JetbrainsManagerTool:
                 self.installed_apps[key] = [version, build_number]
 
         # Print result
-        if self.installed_apps:
+        if self.installed_apps and self.verbose:
             print(
                 "The following apps are already installed:\n"
                 + "  - "
                 + "\n  - ".join(
                     [app_content['help'] for app, app_content in APP_LIST.items() if app in self.installed_apps.keys()])
             )
-        else:
+        elif self.verbose:
             print("No app installed in the designated install folder.")
 
     def __fetch_xml(self):
@@ -240,7 +247,7 @@ class JetbrainsManagerTool:
             req_jetbrains = requests.get(JETBRAINS_XML_URL)
             assert req_jetbrains.status_code == 200
             jetbrains_xml = req_jetbrains.content
-            print("Successfully fetched Jetbrains XML file.")
+            print("Successfully fetched Jetbrains XML file.") if self.verbose else None
 
             # Fetch Android Studio XML file
             req_android_studio = requests.get(ANDROID_STUDIO_XML_URL)
@@ -257,7 +264,7 @@ class JetbrainsManagerTool:
 
             print(
                 "Successfully fetched and combined JetBrains and Android Studio XML files."
-            )
+            ) if self.verbose else None
 
         except Exception as e:
             print(e)
@@ -456,7 +463,7 @@ class JetbrainsManagerTool:
                 )
 
                 if os.path.exists(download_path):
-                    print("File already exists. Skipping download.")
+                    print("File already exists. Skipping download.") if self.verbose else None
                 else:
                     try:
                         req = requests.get(download_link)
@@ -467,12 +474,12 @@ class JetbrainsManagerTool:
 
                         print(
                             "Successfully downloaded app file to {}".format(download_path)
-                        )
+                        ) if self.verbose else None
                     except Exception as e:
                         print(e)
 
                 # Extract file
-                print("Extracting file...")
+                print("Extracting file...") if self.verbose else None
                 if not os.path.exists(install_path):
                     os.makedirs(install_path)
                     try:
@@ -498,7 +505,7 @@ class JetbrainsManagerTool:
                 )
 
                 if os.path.exists(desktop_entry_path):
-                    print("Desktop entry already exists. Deleting it.")
+                    print("Desktop entry already exists. Deleting it.") if self.verbose else None
                     os.remove(desktop_entry_path)
 
                 with open(desktop_entry_path, "w") as f:
@@ -531,7 +538,7 @@ class JetbrainsManagerTool:
                 print(
                     "Successfully created desktop entry at {}".format(
                         desktop_entry_path
-                    )
+                    ) if self.verbose else None
                 )
             except Exception as e:
                 print(e)
@@ -541,7 +548,7 @@ class JetbrainsManagerTool:
                 symlink_path = os.path.join("/usr/local/bin", selected_app)
 
                 if os.path.exists(symlink_path):
-                    print("Symlink already exists. Deleting it.")
+                    print("Symlink already exists. Deleting it.") if self.verbose else None
                     os.remove(symlink_path)
 
                 os.symlink(
@@ -553,7 +560,7 @@ class JetbrainsManagerTool:
                     symlink_path,
                 )
 
-                print("Successfully created symlink at {}".format(symlink_path))
+                print("Successfully created symlink at {}".format(symlink_path)) if self.verbose else None
             except Exception as e:
                 print(e)
 
@@ -566,7 +573,7 @@ class JetbrainsManagerTool:
                 print(
                     "Successfully set executable permissions on {}".format(
                         executable_path
-                    )
+                    ) if self.verbose else None
                 )
             except Exception as e:
                 print(e)
@@ -577,7 +584,7 @@ class JetbrainsManagerTool:
                     os.remove(download_path)
                     print(
                         "Successfully removed downloaded file at {}".format(download_path)
-                    )
+                    ) if self.verbose else None
                 except Exception as e:
                     print(e)
 
@@ -621,7 +628,7 @@ class JetbrainsManagerTool:
                 try:
                     install_path = os.path.join(JETBRAINS_INSTALL_PATH, APP_LIST[selected_app]["folder"])
                     shutil.rmtree(install_path)
-                    print(f'Removed directory: {install_path}')
+                    print(f'Removed directory: {install_path}') if self.verbose else None
 
                 except Exception as e:
                     print(e)
@@ -633,7 +640,7 @@ class JetbrainsManagerTool:
                     )
 
                     if os.path.exists(desktop_entry_path):
-                        print("Removing desktop entry.")
+                        print("Removing desktop entry.") if self.verbose else None
                         os.remove(desktop_entry_path)
 
                 except Exception as e:
@@ -644,7 +651,7 @@ class JetbrainsManagerTool:
                     symlink_path = os.path.join("/usr/local/bin", selected_app)
 
                     if os.path.exists(symlink_path):
-                        print("Removing symlink.")
+                        print("Removing symlink.") if self.verbose else None
                         os.remove(symlink_path)
 
                 except Exception as e:

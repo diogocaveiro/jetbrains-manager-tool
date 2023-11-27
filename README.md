@@ -69,9 +69,9 @@ This command will remove PyCharm Professional and DataGrip.
 | Configuration     | Short Flag | Long Flag            | Description                                                         |
 |:------------------|:----------:|:---------------------|:--------------------------------------------------------------------|
 | Only update data  |    `-z`    | `--only-update-data` | Update application menu and symlinks only.                          |
-| Update mimetypes  |    `-v`    | `--update-mimetypes` | Update application mimetypes.                                       |
+| Update mimetypes  |    `-m`    | `--update-mimetypes` | Update application mimetypes.                                       |
 | No confirm        |    `-y`    | `--no-confirm`       | Do not ask for confirmation.                                        |
-
+| Verbosity         |    `-v`    | `--verbose`          | Increase verbosity.                                                 |
 
 ### Configuration Arguments
 | Configuration     |    Short Flag    | Long Flag                 | Description                                                |
