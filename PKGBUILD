@@ -17,7 +17,6 @@ build() {
 package() {
   # Install
   cd "$srcdir"
-  ls "$srcdir"
   install -d "$pkgdir/usr/share/jetbrains-manager-tool/"
   install -Dm755 jetbrains-manager-tool/jetbrains-manager-tool.py "$pkgdir/usr/share/jetbrains-manager-tool/jetbrains-manager-tool.py"
   install -Dm644 jetbrains-manager-tool/apps_data.json "$pkgdir/usr/share/jetbrains-manager-tool/apps_data.json"
