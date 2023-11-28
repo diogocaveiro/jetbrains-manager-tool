@@ -3,7 +3,6 @@
 """
 TODO:
  - System logs
- - Package for V0.2
 """
 
 import shutil
@@ -16,16 +15,17 @@ import xml.etree.ElementTree as elementTree
 import json
 
 __author__ = "Diogo Caveiro"
-__date__ = "2023-10-24"
-__version__ = "0.1.0"
+__date__ = "2023-11-28"
+__version__ = "0.2.0"
 __github__ = "https://github.com/diogocaveiro"
 __license__ = "GPLv3 License"
 
 JETBRAINS_XML_URL = "https://www.jetbrains.com/updates/updates.xml"
 ANDROID_STUDIO_XML_URL = "https://dl.google.com/android/studio/patches/updates.xml"
 JETBRAINS_INSTALL_PATH = "/opt/jetbrains/"
+SCRIPT_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
 
-with open('apps_data.json', 'r') as json_file:
+with open(os.path.join(SCRIPT_DIRECTORY, 'apps_data.json'), 'r') as json_file:
     APP_LIST = json.load(json_file)
 
 OPERATION_FLAGS = {
