@@ -4,6 +4,7 @@
 TODO:
  - System logs (v3.0.0)
  - Fix print statements (v3.0.0)
+ - Help flag (v4.0.0)
 """
 
 import shutil
