@@ -2,8 +2,6 @@
 
 """
 TODO:
- - System logs (v3.0.0)
- - Fix print statements (v3.0.0)
  - Help flag (v4.0.0)
 """
 
@@ -15,6 +13,7 @@ import subprocess
 import sys
 import xml.etree.ElementTree as elementTree
 import json
+import logging
 
 __author__ = "Diogo Caveiro"
 __date__ = "2023-11-28"
@@ -116,7 +115,12 @@ def check_redirect(url, max_redirects=5) -> int | None:
 
 class JetbrainsManagerTool:
     def __init__(self):
-        print("\nInitializing Jetbrains Updater.")
+        # Set logging level
+        logging.basicConfig(level=logging.DEBUG, filename=os.path.join('/var/log/', 'jetbrains-manager-tool.log'))
+
+        msg_initialize = "Initializing Jetbrains Updater."
+        print("\n" + msg_initialize)
+        logging.info(msg_initialize)
 
         # Parse arguments
         arg_parser = argparse.ArgumentParser()
@@ -147,7 +151,9 @@ class JetbrainsManagerTool:
         if args.directory:
             global JETBRAINS_INSTALL_PATH
             JETBRAINS_INSTALL_PATH = args.directory
-            print(f'Custom path: \"{JETBRAINS_INSTALL_PATH}\".')
+            msg_custom_path = f'Custom path: \"{JETBRAINS_INSTALL_PATH}\".'
+            print(msg_custom_path)
+            logging.info(msg_custom_path)
 
         # Check selected applications
         self.selected_apps = [
@@ -165,7 +171,9 @@ class JetbrainsManagerTool:
         # Set operation (install, update, remove)
         if args.install:
             if not self.selected_apps:
-                print("No app selected. Stopping installer.")
+                msg_no_app_selected = "No app selected. Stopping installer."
+                print(msg_no_app_selected)
+                logging.info(msg_no_app_selected)
                 return
             else:
                 self.__install(only_update_data=args.only_update_data, update_mimetypes=args.update_mimetypes,
@@ -175,7 +183,9 @@ class JetbrainsManagerTool:
                            no_confirm=args.no_confirm)
         elif args.remove:
             if not self.selected_apps:
-                print("No app selected. Stopping installer.")
+                msg_no_app_selected = "No app selected. Stopping installer."
+                print(msg_no_app_selected)
+                logging.info(msg_no_app_selected)
                 return
             else:
                 self.__remove(no_confirm=args.no_confirm)
@@ -211,15 +221,19 @@ class JetbrainsManagerTool:
                 self.installed_apps[key] = [version, build_number]
 
         # Print result
-        if self.installed_apps and self.verbose:
-            print(
-                "The following apps are already installed:\n"
-                + "  - "
-                + "\n  - ".join(
-                    [app_content['help'] for app, app_content in APP_LIST.items() if app in self.installed_apps.keys()])
-            )
-        elif self.verbose:
-            print("No app installed in the designated install folder.")
+        if self.installed_apps:
+            msg_installed_apps = "The following apps are already installed:\n" \
+                                 + "  - " \
+                                 + "\n  - ".join([app_content['help'] for app, app_content in APP_LIST.items()
+                                                  if app in self.installed_apps.keys()])
+            if self.verbose:
+                print(msg_installed_apps)
+        else:
+            msg_installed_apps = "No app installed in the designated install folder."
+            if self.verbose:
+                print(msg_installed_apps)
+
+        logging.info(msg_installed_apps)
 
     def __fetch_xml(self):
         """
@@ -250,13 +264,21 @@ class JetbrainsManagerTool:
             req_jetbrains = requests.get(JETBRAINS_XML_URL)
             assert req_jetbrains.status_code == 200
             jetbrains_xml = req_jetbrains.content
+            msg_fetch_xml = "Successfully fetched Jetbrains XML file."
             if self.verbose:
-                print("Successfully fetched Jetbrains XML file.")
+                print(msg_fetch_xml)
+            logging.debug('XML Status code: ' + str(req_jetbrains.status_code))
+            logging.info(msg_fetch_xml)
 
             # Fetch Android Studio XML file
             req_android_studio = requests.get(ANDROID_STUDIO_XML_URL)
             assert req_android_studio.status_code == 200
             android_studio_xml = req_android_studio.content
+            msg_fetch_xml_as = "Successfully fetched Android Studio XML file."
+            if self.verbose:
+                print(msg_fetch_xml_as)
+            logging.debug('Android Studio XML Status code: ' + str(req_android_studio.status_code))
+            logging.info(msg_fetch_xml_as)
 
             # Append Android Studio XML to JetBrains XML
             jetbrains_root = elementTree.fromstring(jetbrains_xml)
@@ -266,11 +288,14 @@ class JetbrainsManagerTool:
 
             self.xml_file = elementTree.tostring(jetbrains_root, encoding="utf-8")
 
+            msg_xml_success = "Successfully fetched and combined JetBrains and Android Studio XML files."
             if self.verbose:
-                print("Successfully fetched and combined JetBrains and Android Studio XML files.")
+                print(msg_xml_success)
+            logging.info(msg_xml_success)
+
 
         except Exception as e:
-            print(e)
+            logging.exception('Exception occurred')
 
     def __get_current_versions(self, list_of_apps: list):
         """
@@ -316,9 +341,9 @@ class JetbrainsManagerTool:
                 self.app_versions[app] = [last_version, build_number]
 
             else:
-                print(
-                    "It was not possible to find data for {}".format(APP_LIST[app]["name"])
-                )
+                msg_fetch_data_error = "Could not find data for {}.".format(APP_LIST[app]["name"])
+                print(msg_fetch_data_error)
+                logging.error(msg_fetch_data_error)
 
     def __confirmation_prompt(self, job: str, app_list: list) -> bool:
         """
@@ -357,6 +382,7 @@ class JetbrainsManagerTool:
         )
         if confirmation_question != "YES":
             print("Cancelling removal.")
+            logging.info("No confirmation. Cancelling removal.")
             return False
         return True
 
@@ -400,7 +426,9 @@ class JetbrainsManagerTool:
                         outdated_apps.append(installed_app)
 
             if not outdated_apps:
-                print("All applications are up-to-date.")
+                msg_no_outdated_apps = "All applications are up-to-date."
+                print(msg_no_outdated_apps)
+                logging.info(msg_no_outdated_apps)
                 return
 
             install_process_apps = outdated_apps
@@ -416,7 +444,10 @@ class JetbrainsManagerTool:
 
         # Install process
         for selected_app in install_process_apps:
-            print("\n{} {}...".format("Updating" if update else "Installing", APP_LIST[selected_app]["name"]))
+            msg_install_process = "\n{} {}...".format("Updating" if update else "Installing",
+                                                      APP_LIST[selected_app]["name"])
+            print(msg_install_process)
+            logging.info(msg_install_process)
 
             # Define install path
             install_path = os.path.join(
@@ -425,12 +456,14 @@ class JetbrainsManagerTool:
 
             # Check if app is already installed
             if os.path.exists(install_path) and not update and not only_update_data:
-                print(
-                    f"{APP_LIST[selected_app]['name']} is already installed. Skipping installation."
-                )
+                msg_app_already_installed = (f"{APP_LIST[selected_app]['name']} is already installed. Skipping "
+                                             f"installation.")
+                print(msg_app_already_installed)
+                logging.warning(msg_app_already_installed)
                 continue
             elif os.path.exists(install_path) and update and not only_update_data:
                 shutil.rmtree(install_path)
+                logging.info(f'Removed directory before {"update" if update else "install"}: {install_path}')
 
             # Download latest version
             if not only_update_data:
@@ -449,9 +482,10 @@ class JetbrainsManagerTool:
                             break
 
                     if not valid_link_found:
-                        print(
-                            "Error. Could not find a valid download link for Android Studio. Aborting installation."
-                        )
+                        msg_no_valid_link_as = ("Error. Could not find a valid download link for Android Studio. "
+                                                "Aborting installation.")
+                        print(msg_no_valid_link_as)
+                        logging.error(msg_no_valid_link_as)
                         continue
 
                 else:
@@ -459,16 +493,21 @@ class JetbrainsManagerTool:
                         "<VERSION>", self.app_versions[selected_app][0]
                     )
 
+                msg_download_app = f"Downloading {APP_LIST[selected_app]['name']} from {download_link}"
                 if self.verbose:
-                    print(f"Downloading {APP_LIST[selected_app]['name']} from {download_link}")
+                    print(msg_download_app)
+                logging.debug(msg_download_app)
+
                 download_path = os.path.join(
                     "/tmp",
                     "{}-{}.tar.gz".format(APP_LIST[selected_app]["name"], self.app_versions[selected_app][0]),
                 )
 
                 if os.path.exists(download_path):
+                    msg_path_exists = "File already exists. Skipping download."
                     if self.verbose:
-                        print("File already exists. Skipping download.")
+                        print(msg_path_exists)
+                    logging.warning(msg_path_exists)
                 else:
                     try:
                         req = requests.get(download_link)
@@ -477,14 +516,21 @@ class JetbrainsManagerTool:
                         with open(download_path, "wb") as f:
                             f.write(req.content)
 
+                        msg_download_success = "Successfully downloaded app file."
                         if self.verbose:
-                            print("Successfully downloaded app file to {}".format(download_path))
+                            print(msg_download_success)
+                        logging.info(msg_download_success)
+                        logging.debug("Successfully downloaded app file to {}".format(download_path))
+
                     except Exception as e:
-                        print(e)
+                        logging.exception('Exception occurred')
 
                 # Extract file
+                msg_extracting_file = "Extracting file..."
                 if self.verbose:
-                    print("Extracting file...")
+                    print(msg_extracting_file)
+                logging.info(msg_extracting_file)
+
                 if not os.path.exists(install_path):
                     os.makedirs(install_path)
                     try:
@@ -501,7 +547,7 @@ class JetbrainsManagerTool:
                         )
                         assert result != 0
                     except Exception as e:
-                        print(e)
+                        logging.exception('Exception occurred')
 
             # Create desktop entry
             try:
@@ -510,9 +556,12 @@ class JetbrainsManagerTool:
                 )
 
                 if os.path.exists(desktop_entry_path):
+                    msg_desktop_entry_exists = "Desktop entry already exists. Deleting it."
                     if self.verbose:
-                        print("Desktop entry already exists. Deleting it.")
+                        print(msg_desktop_entry_exists)
                     os.remove(desktop_entry_path)
+                    logging.info(msg_desktop_entry_exists)
+                    logging.debug(f'Desktop entry path: {desktop_entry_path}')
 
                 with open(desktop_entry_path, "w") as f:
                     f.write("[Desktop Entry]\n")
@@ -541,20 +590,26 @@ class JetbrainsManagerTool:
                             f.write(mimetype + ";")
                         f.write("\n")
 
+                msg_desktop_entry_created = "Successfully created desktop entry at {}".format(desktop_entry_path)
                 if self.verbose:
-                    print("Successfully created desktop entry at {}".format(desktop_entry_path))
+                    print(msg_desktop_entry_created)
+                logging.info(msg_desktop_entry_created)
+                logging.debug(f'Desktop entry created at {desktop_entry_path}')
 
             except Exception as e:
-                print(e)
+                logging.exception('Exception occurred')
 
             # Create symlink
             try:
                 symlink_path = os.path.join("/usr/local/bin", selected_app)
 
                 if os.path.exists(symlink_path):
+                    msg_symlink_exists = "Symlink already exists. Deleting it."
                     if self.verbose:
-                        print("Symlink already exists. Deleting it.")
+                        print(msg_symlink_exists)
                     os.remove(symlink_path)
+                    logging.info(msg_symlink_exists)
+                    logging.debug(f'Deleted existing symlink: {symlink_path}')
 
                 os.symlink(
                     os.path.join(
@@ -565,10 +620,14 @@ class JetbrainsManagerTool:
                     symlink_path,
                 )
 
+                msg_symlink_create = "Successfully created symlink"
                 if self.verbose:
-                    print("Successfully created symlink at {}".format(symlink_path))
+                    print(msg_symlink_create)
+                logging.info(msg_symlink_create)
+                logging.debug("Successfully created symlink at {}".format(symlink_path))
+
             except Exception as e:
-                print(e)
+                logging.exception('Exception occurred')
 
             # Chmod +x on executable
             try:
@@ -576,21 +635,28 @@ class JetbrainsManagerTool:
                     install_path, "bin", APP_LIST[selected_app]["executable"] + ".sh"
                 )
                 subprocess.call(["sudo", "chmod", "+x", executable_path])
+
+                msg_executable_permissions = "Successfully set executable permissions"
                 if self.verbose:
-                    print("Successfully set executable permissions on {}".format(executable_path))
+                    print(msg_executable_permissions)
+                logging.info(msg_executable_permissions)
+                logging.debug("Successfully set executable permissions on {}".format(executable_path))
 
             except Exception as e:
-                print(e)
+                logging.exception('Exception occurred')
 
             # Remove downloaded file
             if not only_update_data:
                 try:
                     os.remove(download_path)
+                    msg_download_remove = "Successfully removed downloaded file."
                     if self.verbose:
-                        print("Successfully removed downloaded file at {}".format(download_path))
+                        print(msg_download_remove)
+                    logging.info(msg_download_remove)
+                    logging.debug("Successfully removed downloaded file at {}".format(download_path))
 
                 except Exception as e:
-                    print(e)
+                    logging.exception('Exception occurred')
 
     def __remove(self, no_confirm=False):
         """
@@ -626,17 +692,22 @@ class JetbrainsManagerTool:
 
         for selected_app in self.selected_apps:
             if selected_app in self.installed_apps.keys():
-                print("Removing {}.\n".format(APP_LIST[selected_app]["name"]))
+                msg_removing_app = "Removing {}.\n".format(APP_LIST[selected_app]["name"])
+                print(msg_removing_app)
+                logging.info(msg_removing_app)
 
                 # Remove directory
                 try:
                     install_path = os.path.join(JETBRAINS_INSTALL_PATH, APP_LIST[selected_app]["folder"])
                     shutil.rmtree(install_path)
+                    msg_removed_directory = "Successfully removed directory."
                     if self.verbose:
-                        print(f'Removed directory: {install_path}')
+                        print(msg_removed_directory)
+                    logging.info(msg_removed_directory)
+                    logging.debug(f'Removed directory: {install_path}')
 
                 except Exception as e:
-                    print(e)
+                    logging.exception('Exception occurred')
 
                 # Remove desktop entry
                 try:
@@ -645,24 +716,32 @@ class JetbrainsManagerTool:
                     )
 
                     if os.path.exists(desktop_entry_path):
+                        msg_remove_desktop_entry = "Removing desktop entry."
                         if self.verbose:
-                            print("Removing desktop entry.")
+                            print(msg_remove_desktop_entry)
+                        logging.info(msg_remove_desktop_entry)
+                        logging.debug(f'Removing desktop entry at {desktop_entry_path}.')
+
                         os.remove(desktop_entry_path)
 
                 except Exception as e:
-                    print(e)
+                    logging.exception('Exception occurred')
 
                 # Remove symlink
                 try:
                     symlink_path = os.path.join("/usr/local/bin", selected_app)
 
                     if os.path.exists(symlink_path):
+                        msg_remove_symlink = "Removing symlink."
                         if self.verbose:
-                            print("Removing symlink.")
+                            print(msg_remove_symlink)
+                        logging.info(msg_remove_symlink)
+                        logging.debug(f"Removing symlink at {symlink_path}")
+
                         os.remove(symlink_path)
 
                 except Exception as e:
-                    print(e)
+                    logging.exception('Exception occurred')
 
 
 def request_root_permissions():
@@ -680,6 +759,7 @@ def request_root_permissions():
 
     if os.geteuid() != 0:
         print("This script requires root permissions. Please enter your password.")
+        logging.info("Root permission request.")
         ret = subprocess.call(["sudo", sys.executable] + sys.argv)
         if ret != 0:
             sys.exit(1)
