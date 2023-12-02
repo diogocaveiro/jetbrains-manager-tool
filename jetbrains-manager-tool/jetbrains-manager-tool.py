@@ -47,7 +47,13 @@ OPERATION_FLAGS = {
         "--remove",
         "Removal mode. Use this flag to remove applications.",
         "store_true",
-    ]
+    ],
+    "help": [
+        "-h",
+        "--help",
+        "Displays helpful information.",
+        "store_true",
+    ],
 }
 
 CONFIGURATION_FLAGS = {
@@ -123,7 +129,7 @@ class JetbrainsManagerTool:
         logging.info(msg_initialize)
 
         # Parse arguments
-        arg_parser = argparse.ArgumentParser()
+        arg_parser = argparse.ArgumentParser(add_help=False)
         exclusive_group = arg_parser.add_mutually_exclusive_group(required=True)
 
         # Operation flags
@@ -189,6 +195,8 @@ class JetbrainsManagerTool:
                 return
             else:
                 self.__remove(no_confirm=args.no_confirm)
+        elif args.help:
+            self.__show_documentation()
 
     def __check_installed_apps(self):
         """
@@ -741,6 +749,20 @@ class JetbrainsManagerTool:
 
                 except Exception as e:
                     logging.exception('Exception occurred')
+
+    @staticmethod
+    def __show_documentation():
+        logging.info("Showing documentation.")
+        docs_path = os.path.join(SCRIPT_DIRECTORY, 'docs/help_docs.md')
+
+        try:
+            subprocess.run(['less', docs_path])
+        except FileNotFoundError:
+            print(f"Unable to open documentation. Make sure 'less' is installed and the documentation file exists "
+                  f"at {docs_path}")
+            logging.exception('Exception occurred')
+        except Exception as e:
+            logging.exception('Exception occurred')
 
 
 def request_root_permissions():
