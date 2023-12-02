@@ -73,6 +73,12 @@ This command will remove PyCharm Professional and DataGrip.
 | No confirm        |    `-y`    | `--no-confirm`       | Do not ask for confirmation.                                        |
 | Verbosity         |    `-v`    | `--verbose`          | Increase verbosity.                                                 |
 
+### Help Flag
+
+| Flag               | Short Flag | Long Flag | Description                   |
+|:-------------------|:----------:|:----------|:------------------------------|
+| View documentation |    `-h`    | `--help`  | Displays helpful information. |
+
 ### Configuration Arguments
 | Configuration     |    Short Flag    | Long Flag                 | Description                                                |
 |:------------------|:----------------:|:--------------------------|:-----------------------------------------------------------|
