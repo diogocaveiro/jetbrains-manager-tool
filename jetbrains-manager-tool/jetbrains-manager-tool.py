@@ -545,7 +545,6 @@ class JetbrainsManagerTool:
                                 "--strip-components=1",
                             ]
                         )
-                        assert result != 0
                     except Exception as e:
                         logging.exception('Exception occurred')
 
@@ -692,8 +691,8 @@ class JetbrainsManagerTool:
 
         for selected_app in self.selected_apps:
             if selected_app in self.installed_apps.keys():
-                msg_removing_app = "Removing {}.\n".format(APP_LIST[selected_app]["name"])
-                print(msg_removing_app)
+                msg_removing_app = "Removing {}.".format(APP_LIST[selected_app]["name"])
+                print(msg_removing_app + "\n")
                 logging.info(msg_removing_app)
 
                 # Remove directory
