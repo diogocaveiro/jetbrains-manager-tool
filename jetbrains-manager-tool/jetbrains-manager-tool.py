@@ -2,7 +2,8 @@
 
 """
 TODO:
- - System logs
+ - System logs (v3.0.0)
+ - Fix print statements (v3.0.0)
 """
 
 import shutil
@@ -16,7 +17,7 @@ import json
 
 __author__ = "Diogo Caveiro"
 __date__ = "2023-11-28"
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __github__ = "https://github.com/diogocaveiro"
 __license__ = "GPLv3 License"
 
@@ -457,7 +458,7 @@ class JetbrainsManagerTool:
                         "<VERSION>", self.app_versions[selected_app][0]
                     )
 
-                print(f"Downloading {APP_LIST[selected_app]['name']} from {download_link}")
+                print(f"Downloading {APP_LIST[selected_app]['name']} from {download_link}") if self.verbose else None
                 download_path = os.path.join(
                     "/tmp",
                     "{}-{}.tar.gz".format(APP_LIST[selected_app]["name"], self.app_versions[selected_app][0]),
