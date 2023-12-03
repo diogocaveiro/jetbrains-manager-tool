@@ -3,6 +3,7 @@
 """
 TODO:
     - Show version number and app name in help documentation
+    - Save and load automatically custom install location
 """
 
 import shutil
@@ -16,7 +17,7 @@ import json
 import logging
 
 __author__ = "Diogo Caveiro"
-__date__ = "2023-11-28"
+__date__ = "2023-12-03"
 __version__ = "0.3.0"
 __github__ = "https://github.com/diogocaveiro"
 __license__ = "GPLv3 License"
