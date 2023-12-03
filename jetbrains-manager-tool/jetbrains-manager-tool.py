@@ -123,9 +123,6 @@ def check_redirect(url, max_redirects=5) -> int | None:
 
 class JetbrainsManagerTool:
     def __init__(self):
-        # Set logging level
-        logging.basicConfig(level=logging.DEBUG, filename=os.path.join('/var/log/', 'jetbrains-manager-tool.log'))
-
         msg_initialize = "Initializing Jetbrains Updater."
         print("\n" + msg_initialize)
         logging.info(msg_initialize)
@@ -759,15 +756,29 @@ def get_arguments_and_flags():
 
 
 def show_help_documentation():
+    """
+    Displays the help documentation using the 'less' command.
+
+    This function attempts to open a Markdown file containing help documentation with the 'less' command for easy
+    viewing. The documentation file is expected to be located in a 'docs' subdirectory within the script's directory.
+    The path to the documentation is constructed using the script's directory path.
+
+    Raises:
+        FileNotFoundError: If the 'less' command is not installed or the documentation file does not exist.
+        Exception: For any other exceptions that occur when attempting to open the documentation.
+    """
+
     logging.info("Showing documentation.")
     docs_path = os.path.join(SCRIPT_DIRECTORY, 'docs/help_docs.md')
 
     try:
         subprocess.run(['less', docs_path], shell=False)
+
     except FileNotFoundError:
         print(f"Unable to open documentation. Make sure 'less' is installed and the documentation file exists "
               f"at {docs_path}")
         logging.exception('Exception occurred')
+
     except Exception:
         logging.exception('Exception occurred')
 
@@ -795,6 +806,9 @@ def request_root_permissions():
 
 
 if __name__ == "__main__":
+    # Set logging level
+    logging.basicConfig(level=logging.DEBUG, filename=os.path.join('/var/log/', 'jetbrains-manager-tool.log'))
+
     # Get arguments and flags
     get_arguments_and_flags()
 
