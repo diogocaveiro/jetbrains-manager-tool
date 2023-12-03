@@ -1,3 +1,9 @@
+V0.3 (03/12/2023):
+    - Add list installed apps configuration flag.
+    - Add help flag to show documentation in the terminal.
+    - Add logging.
+    - Code optimization.
+
 V0.2 (28/11/2023):
     - Add verbose mode configuration flag.
     - Fix issue trying to locate app_data.json file.
