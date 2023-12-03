@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+"""
+TODO:
+    - Show version number and app name in help documentation
+"""
+
 import shutil
 import requests
 import argparse
