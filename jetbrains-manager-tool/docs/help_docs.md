@@ -15,6 +15,10 @@ Options:
     Remove selected JetBrains applications. Use application flags to specify which applications to remove.
     Example: ./jetbrains-manager-tool.py -r -P -S
 
+  -l, --list
+    List installed JetBrains applications.
+    Example: ./jetbrains-manager-tool.py -l
+
 Application Flags:
   -A, --android-studio       Install or remove Android Studio.
   -O, --appcode              Install or remove AppCode.

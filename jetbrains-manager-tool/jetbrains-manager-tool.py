@@ -20,6 +20,7 @@ JETBRAINS_XML_URL = "https://www.jetbrains.com/updates/updates.xml"
 ANDROID_STUDIO_XML_URL = "https://dl.google.com/android/studio/patches/updates.xml"
 JETBRAINS_INSTALL_PATH = "/opt/jetbrains/"
 SCRIPT_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
+global args
 
 with open(os.path.join(SCRIPT_DIRECTORY, 'apps_data.json'), 'r') as json_file:
     APP_LIST = json.load(json_file)
@@ -47,6 +48,12 @@ OPERATION_FLAGS = {
         "-h",
         "--help",
         "Displays helpful information.",
+        "store_true",
+    ],
+    "list": [
+        "-l",
+        "--list",
+        "List installed applications.",
         "store_true",
     ],
 }
@@ -123,38 +130,8 @@ class JetbrainsManagerTool:
         print("\n" + msg_initialize)
         logging.info(msg_initialize)
 
-        # Parse arguments
-        arg_parser = argparse.ArgumentParser(add_help=False)
-        exclusive_group = arg_parser.add_mutually_exclusive_group(required=True)
-
-        # Operation flags
-        for operation in OPERATION_FLAGS.values():
-            exclusive_group.add_argument(
-                operation[0], operation[1], action=operation[3], help=operation[2]
-            )
-
-        # Application flags
-        for app in APP_LIST.values():
-            arg_parser.add_argument(app["flag"], action="store_true", help=app["help"])
-
-        # Configuration flags/arguments
-        for operation in CONFIGURATION_FLAGS.values():
-            arg_parser.add_argument(
-                operation[0], operation[1], action=operation[3], help=operation[2]
-            )
-
-        args = arg_parser.parse_args()
-
         # Verbose mode
         self.verbose = True if args.verbose else False
-
-        # Change default directory
-        if args.directory:
-            global JETBRAINS_INSTALL_PATH
-            JETBRAINS_INSTALL_PATH = args.directory
-            msg_custom_path = f'Custom path: \"{JETBRAINS_INSTALL_PATH}\".'
-            print(msg_custom_path)
-            logging.info(msg_custom_path)
 
         # Check selected applications
         self.selected_apps = [
@@ -190,10 +167,11 @@ class JetbrainsManagerTool:
                 return
             else:
                 self.__remove(no_confirm=args.no_confirm)
-        elif args.help:
-            self.__show_documentation()
 
-    def __check_installed_apps(self):
+        elif args.list:
+            self.__check_installed_apps(list_installed_apps=True)
+
+    def __check_installed_apps(self, list_installed_apps=False):
         """
         Check and identify installed JetBrains applications along with their versions.
 
@@ -204,9 +182,9 @@ class JetbrainsManagerTool:
         The information about installed applications is stored in the instance variable `self.installed_apps` in the
         form: {<app_key>: [<version>, <build_number>], ...}
 
-        After checking all applications, the method prints a list of installed apps and their descriptions to the
-        console. If no applications are detected in the installation path, a message is printed indicating the
-        absence of installed apps.
+        If `list_installed_apps` or verbose flag are set to True, the method prints a list of installed apps and
+        their descriptions to the console. If no applications are detected in the installation path, a message is
+        printed indicating the absence of installed apps.
 
         Attributes updated:
         - self.installed_apps (dict): A dictionary mapping app keys to their respective versions and build numbers.
@@ -229,11 +207,11 @@ class JetbrainsManagerTool:
                                  + "  - " \
                                  + "\n  - ".join([app_content['help'] for app, app_content in APP_LIST.items()
                                                   if app in self.installed_apps.keys()])
-            if self.verbose:
+            if self.verbose or list_installed_apps:
                 print(msg_installed_apps)
         else:
             msg_installed_apps = "No app installed in the designated install folder."
-            if self.verbose:
+            if self.verbose or list_installed_apps:
                 print(msg_installed_apps)
 
         logging.info(msg_installed_apps)
@@ -296,8 +274,7 @@ class JetbrainsManagerTool:
                 print(msg_xml_success)
             logging.info(msg_xml_success)
 
-
-        except Exception as e:
+        except Exception:
             logging.exception('Exception occurred')
 
     def __get_current_versions(self, list_of_apps: list):
@@ -348,7 +325,8 @@ class JetbrainsManagerTool:
                 print(msg_fetch_data_error)
                 logging.error(msg_fetch_data_error)
 
-    def __confirmation_prompt(self, job: str, app_list: list) -> bool:
+    @staticmethod
+    def __confirmation_prompt(job: str, app_list: list) -> bool:
         """
         Display a user confirmation prompt for a given job on a list of applications.
 
@@ -525,7 +503,7 @@ class JetbrainsManagerTool:
                         logging.info(msg_download_success)
                         logging.debug("Successfully downloaded app file to {}".format(download_path))
 
-                    except Exception as e:
+                    except Exception:
                         logging.exception('Exception occurred')
 
                 # Extract file
@@ -548,7 +526,7 @@ class JetbrainsManagerTool:
                                 "--strip-components=1",
                             ]
                         )
-                    except Exception as e:
+                    except Exception:
                         logging.exception('Exception occurred')
 
             # Create desktop entry
@@ -598,7 +576,7 @@ class JetbrainsManagerTool:
                 logging.info(msg_desktop_entry_created)
                 logging.debug(f'Desktop entry created at {desktop_entry_path}')
 
-            except Exception as e:
+            except Exception:
                 logging.exception('Exception occurred')
 
             # Create symlink
@@ -628,7 +606,7 @@ class JetbrainsManagerTool:
                 logging.info(msg_symlink_create)
                 logging.debug("Successfully created symlink at {}".format(symlink_path))
 
-            except Exception as e:
+            except Exception:
                 logging.exception('Exception occurred')
 
             # Chmod +x on executable
@@ -644,7 +622,7 @@ class JetbrainsManagerTool:
                 logging.info(msg_executable_permissions)
                 logging.debug("Successfully set executable permissions on {}".format(executable_path))
 
-            except Exception as e:
+            except Exception:
                 logging.exception('Exception occurred')
 
             # Remove downloaded file
@@ -657,7 +635,7 @@ class JetbrainsManagerTool:
                     logging.info(msg_download_remove)
                     logging.debug("Successfully removed downloaded file at {}".format(download_path))
 
-                except Exception as e:
+                except Exception:
                     logging.exception('Exception occurred')
 
     def __remove(self, no_confirm=False):
@@ -708,7 +686,7 @@ class JetbrainsManagerTool:
                     logging.info(msg_removed_directory)
                     logging.debug(f'Removed directory: {install_path}')
 
-                except Exception as e:
+                except Exception:
                     logging.exception('Exception occurred')
 
                 # Remove desktop entry
@@ -726,7 +704,7 @@ class JetbrainsManagerTool:
 
                         os.remove(desktop_entry_path)
 
-                except Exception as e:
+                except Exception:
                     logging.exception('Exception occurred')
 
                 # Remove symlink
@@ -742,22 +720,56 @@ class JetbrainsManagerTool:
 
                         os.remove(symlink_path)
 
-                except Exception as e:
+                except Exception:
                     logging.exception('Exception occurred')
 
-    @staticmethod
-    def __show_documentation():
-        logging.info("Showing documentation.")
-        docs_path = os.path.join(SCRIPT_DIRECTORY, 'docs/help_docs.md')
 
-        try:
-            subprocess.run(['less', docs_path])
-        except FileNotFoundError:
-            print(f"Unable to open documentation. Make sure 'less' is installed and the documentation file exists "
-                  f"at {docs_path}")
-            logging.exception('Exception occurred')
-        except Exception as e:
-            logging.exception('Exception occurred')
+def get_arguments_and_flags():
+    global args
+
+    # Parse arguments
+    arg_parser = argparse.ArgumentParser(add_help=False)
+    exclusive_group = arg_parser.add_mutually_exclusive_group(required=True)
+
+    # Operation flags
+    for operation in OPERATION_FLAGS.values():
+        exclusive_group.add_argument(
+            operation[0], operation[1], action=operation[3], help=operation[2]
+        )
+
+    # Application flags
+    for app in APP_LIST.values():
+        arg_parser.add_argument(app["flag"], action="store_true", help=app["help"])
+
+    # Configuration flags/arguments
+    for operation in CONFIGURATION_FLAGS.values():
+        arg_parser.add_argument(
+            operation[0], operation[1], action=operation[3], help=operation[2]
+        )
+
+    args = arg_parser.parse_args()
+
+    # Change default directory
+    if args.directory:
+        global JETBRAINS_INSTALL_PATH
+        JETBRAINS_INSTALL_PATH = args.directory
+        msg_custom_path = f'Custom path: \"{JETBRAINS_INSTALL_PATH}\".'
+        print(msg_custom_path)
+        logging.info(msg_custom_path)
+
+
+def show_help_documentation():
+    logging.info("Showing documentation.")
+    docs_path = os.path.join(SCRIPT_DIRECTORY, 'docs/help_docs.md')
+
+    try:
+        subprocess.run(['less', docs_path], shell=False)
+    except FileNotFoundError:
+        print(f"Unable to open documentation. Make sure 'less' is installed and the documentation file exists "
+              f"at {docs_path}")
+        logging.exception('Exception occurred')
+    except Exception:
+        logging.exception('Exception occurred')
 
 
 def request_root_permissions():
@@ -776,13 +788,22 @@ def request_root_permissions():
     if os.geteuid() != 0:
         print("This script requires root permissions. Please enter your password.")
         logging.info("Root permission request.")
-        ret = subprocess.call(["sudo", sys.executable] + sys.argv)
+        ret = subprocess.call(["sudo", sys.executable] + sys.argv, shell=False)
         if ret != 0:
             sys.exit(1)
         sys.exit(0)
 
 
 if __name__ == "__main__":
+    # Get arguments and flags
+    get_arguments_and_flags()
+
+    # Display help documentation
+    if args.help:
+        show_help_documentation()
+        sys.exit(0)
+
+    # Request root permissions
     request_root_permissions()
 
     managertool = JetbrainsManagerTool
