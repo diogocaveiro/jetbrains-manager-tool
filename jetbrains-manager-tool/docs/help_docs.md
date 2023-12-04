@@ -1,19 +1,29 @@
-Usage: jetbrains-manager-tool.py [OPTIONS]
+Jetbrains Manager Tool 0.3.0 (2023 dez 02)
+
+Usage: jetbrains-manager-tool [OPTIONS]
 
 This tool provides a streamlined process for the installation, update, and removal of various JetBrains applications.
 
 Options:
   -i, --install
     Install selected JetBrains applications. Use application flags to specify which applications to install.
-    Example: ./jetbrains-manager-tool.py -i -P -S
+    Example: jetbrains-manager-tool -i -P -S
 
   -u, --update
     Update all installed JetBrains applications. Does not require specification of individual applications.
-    Example: ./jetbrains-manager-tool.py -u
+    Example: jetbrains-manager-tool -u
 
   -r, --remove
     Remove selected JetBrains applications. Use application flags to specify which applications to remove.
-    Example: ./jetbrains-manager-tool.py -r -P -S
+    Example: jetbrains-manager-tool -r -P -S
+
+  -l, --list
+    Lists all installed Jetbrains applications.
+    Example: jetbrains-manager-tool -l
+
+  -h, --help
+    Displays the help documentation.
+    Example: jetbrains-manager-tool -h
 
 Application Flags:
   -A, --android-studio       Install or remove Android Studio.
@@ -43,10 +53,7 @@ Configuration Flags:
 Configuration Arguments:
   -d [directory], --directory [directory]
     Set custom installation directory.
-    Example: ./jetbrains-manager-tool.py -i -P -d /custom/path
-
-Miscellaneous:
-  --help                    Show this help message and exit.
+    Example: jetbrains-manager-tool -i -P -d /custom/path
 
 Disclaimer:
   This software is provided "as is", without warranty of any kind. Not affiliated with JetBrains.

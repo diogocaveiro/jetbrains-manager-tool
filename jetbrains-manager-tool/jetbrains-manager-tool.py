@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 
-"""
-TODO:
- - Help flag (v4.0.0)
-"""
-
 import shutil
 import requests
 import argparse
