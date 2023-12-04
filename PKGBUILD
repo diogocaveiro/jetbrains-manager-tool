@@ -7,7 +7,7 @@ url='https://github.com/diogocaveiro/jetbrains-manager-tool'
 license=('GPL-3.0-only')
 depends=('python' 'python-requests' 'python-poetry' 'less')
 source=("jetbrains-manager-tool_V$pkgver.tar.gz")
-sha256sums=('8809fb97315af556cd19e997288528429aba100ab7bf79bb05ceed08cdf2dc36')
+sha256sums=('01d6e7b4109eecb13f7c3162ddc42f682e72a0ab9100f95554da304f5b020125')
 
 build() {
   cd "$srcdir"
