@@ -769,6 +769,16 @@ def get_arguments_and_flags():
             logging.debug(f'Created configuration file at {os.path.join(os.path.expanduser("~"), ".config", "jetbrains-manager-tool")}')
         except Exception:
             logging.exception('Exception occurred')
+    else:
+        if os.path.exists(os.path.join(os.path.expanduser('~'), '.config', 'jetbrains-manager-tool')):
+            with open(os.path.join(os.path.expanduser('~'), '.config', 'jetbrains-manager-tool'), 'r') as config_file:
+                for line in config_file.readlines():
+                    if line.startswith('JETBRAINS_INSTALL_PATH'):
+                        JETBRAINS_INSTALL_PATH = line.split('=')[1].strip()
+                        msg_custom_path = f'Custom path: \"{JETBRAINS_INSTALL_PATH}\".'
+                        print(msg_custom_path)
+                        logging.info(msg_custom_path)
+                        break
 
 
 def show_help_documentation():
