@@ -755,7 +755,7 @@ def get_arguments_and_flags():
     args = arg_parser.parse_args()
 
     # Change default directory
-    if args.directory:
+    if args.directory and os.path.exists(args.directory):
         global JETBRAINS_INSTALL_PATH
         JETBRAINS_INSTALL_PATH = args.directory
         msg_custom_path = f'Custom path: \"{JETBRAINS_INSTALL_PATH}\".'
@@ -769,6 +769,11 @@ def get_arguments_and_flags():
             logging.debug(f'Created configuration file at {os.path.join(os.path.expanduser("~"), ".config", "jetbrains-manager-tool")}')
         except Exception:
             logging.exception('Exception occurred')
+    elif args.directory and not os.path.exists(args.directory):
+        msg_invalid_path = f'Invalid path: \"{args.directory}\".'
+        print(msg_invalid_path)
+        logging.error(msg_invalid_path)
+        sys.exit(1)
     else:
         if os.path.exists(os.path.join(os.path.expanduser('~'), '.config', 'jetbrains-manager-tool')):
             with open(os.path.join(os.path.expanduser('~'), '.config', 'jetbrains-manager-tool'), 'r') as config_file:
