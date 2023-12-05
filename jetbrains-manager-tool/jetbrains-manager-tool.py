@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# TODO: Arg to just update path
+
 import shutil
 import requests
 import argparse
