@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# TODO: Arg to just update path
+# TODO: Update docs for custom path
 
 import shutil
 import requests
