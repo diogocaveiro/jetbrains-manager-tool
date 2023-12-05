@@ -58,6 +58,12 @@ OPERATION_FLAGS = {
         "List installed applications.",
         "store_true",
     ],
+    "updatedir": [
+        "-n",
+        "--updatedir",
+        "Update the installation path.",
+        "store_true",
+    ],
 }
 
 CONFIGURATION_FLAGS = {
@@ -837,6 +843,17 @@ if __name__ == "__main__":
     # Display help documentation
     if args.help:
         show_help_documentation()
+        sys.exit(0)
+
+    if args.updatedir:
+        update_path = input("Enter the new install path: ")
+        if os.path.exists(update_path):
+            with open(os.path.join(os.path.expanduser('~'), '.config', 'jetbrains-manager-tool'), 'w') as config_file:
+                config_file.write(f'JETBRAINS_INSTALL_PATH={update_path}\n')
+        else:
+            print(f'Invalid path: \"{update_path}\".')
+            logging.error(f'Invalid path: \"{update_path}\".')
+            sys.exit(1)
         sys.exit(0)
 
     # Request root permissions
