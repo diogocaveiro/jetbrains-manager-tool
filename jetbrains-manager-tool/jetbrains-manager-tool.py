@@ -2,7 +2,6 @@
 
 """
 TODO:
-    - Show version number and app name in help documentation
     - Save and load automatically custom install location
 """
 
@@ -762,6 +761,14 @@ def get_arguments_and_flags():
         msg_custom_path = f'Custom path: \"{JETBRAINS_INSTALL_PATH}\".'
         print(msg_custom_path)
         logging.info(msg_custom_path)
+
+        # Create configuration file
+        try:
+            with open(os.path.join(os.path.expanduser('~'), '.config', 'jetbrains-manager-tool'), 'w') as config_file:
+                config_file.write(f'JETBRAINS_INSTALL_PATH={JETBRAINS_INSTALL_PATH}\n')
+            logging.debug(f'Created configuration file at {os.path.join(os.path.expanduser("~"), ".config", "jetbrains-manager-tool")}')
+        except Exception:
+            logging.exception('Exception occurred')
 
 
 def show_help_documentation():
