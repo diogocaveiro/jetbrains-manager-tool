@@ -1,6 +1,7 @@
 V0.4 (07/12/2023):
     - Improved error handling.
     - Created build script.
+    - Small fixes.
 
 V0.3 (03/12/2023):
     - Add list installed apps configuration flag.

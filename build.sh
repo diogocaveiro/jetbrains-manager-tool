@@ -6,10 +6,11 @@ pkgver="0.4.0"
 # Other variables
 pkgtar="jetbrains-manager-tool_V${pkgver}.tar.gz"
 
-# Update script data
+# Update package data
 today=$(date '+%Y-%m-%d')
 sed -i "s/__date__ = \".*\"/__date__ = \"${today}\"/g" jetbrains-manager-tool/jetbrains-manager-tool.py
 sed -i "s/__version__ = \".*\"/__version__ = \"${pkgver}\"/g" jetbrains-manager-tool/jetbrains-manager-tool.py
+sed -i "1s/.*/JetBrains Manager Tool ${pkgver} (${today})/" jetbrains-manager-tool/docs/help_docs.md
 
 # Package to build
 echo "Compressing the package"
