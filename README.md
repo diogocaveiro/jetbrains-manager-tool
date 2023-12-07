@@ -36,13 +36,14 @@ This command will remove PyCharm Professional and DataGrip.
 
 ### Operation Flags (Choose one)
 
-| Operation | Short Flag | Long Flag                | Description                                  |
-|:----------|:----------:|:-------------------------|:---------------------------------------------|
-| Install   |    `-i`    | `--install`              | Install selected JetBrains applications.     |
-| Update    |    `-u`    | `--update`               | Update all installed JetBrains applications. |
-| Remove    |    `-r`    | `--remove`               | Remove selected JetBrains applications.      |
-| List      |    `-l`    | `--list`                 | List installed JetBrains applications.      |
-| Help      |    `-h`    | `--help`                 | Displays the help documentation.             |
+| Operation        | Short Flag | Long Flag     | Description                                         |
+|:-----------------|:----------:|:--------------|:----------------------------------------------------|
+| Install          |    `-i`    | `--install`   | Install selected JetBrains applications.            |
+| Update           |    `-u`    | `--update`    | Update all installed JetBrains applications.        |
+| Remove           |    `-r`    | `--remove`    | Remove selected JetBrains applications.             |
+| List             |    `-l`    | `--list`      | List installed JetBrains applications.              |
+| Help             |    `-h`    | `--help`      | Displays the help documentation.                    |
+| Update Directory |    `-n`    | `--updatedir` | Update install directory in the configuration file. |
 
 ### Application Flags
 

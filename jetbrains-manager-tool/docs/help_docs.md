@@ -29,6 +29,10 @@ Options:
     List installed JetBrains applications.
     Example: ./jetbrains-manager-tool.py -l
 
+  -n, --updatedir
+    Update install directory in the configuration file.
+    Example: ./jetbrains-manager-tool.py -n /custom/path
+
 Application Flags:
   -A, --android-studio       Install or remove Android Studio.
   -O, --appcode              Install or remove AppCode.
