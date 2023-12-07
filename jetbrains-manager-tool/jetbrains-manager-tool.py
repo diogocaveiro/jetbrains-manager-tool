@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 
-"""
-    TODO:
-        - Docs for custom path
-"""
-
 import shutil
 import requests
 import argparse
