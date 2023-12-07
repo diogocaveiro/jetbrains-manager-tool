@@ -3,7 +3,7 @@
 """
     TODO:
         - Docs for custom path
-        - Only root for system-wide installation
+        - Build script
 """
 
 import shutil
