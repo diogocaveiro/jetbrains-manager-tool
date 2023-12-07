@@ -19,14 +19,16 @@ package() {
   # Install
   cd "$srcdir"
   install -d "$pkgdir/usr/share/jetbrains-manager-tool/"
-  install -Dm500 jetbrains-manager-tool/jetbrains-manager-tool.py "$pkgdir/usr/share/jetbrains-manager-tool/jetbrains-manager-tool.py"
-  install -Dm400 jetbrains-manager-tool/apps_data.json "$pkgdir/usr/share/jetbrains-manager-tool/apps_data.json"
+  install -Dm555 jetbrains-manager-tool/jetbrains-manager-tool.py "$pkgdir/usr/share/jetbrains-manager-tool/jetbrains-manager-tool.py"
+  install -Dm444 jetbrains-manager-tool/apps_data.json "$pkgdir/usr/share/jetbrains-manager-tool/apps_data.json"
   install -d "$pkgdir/usr/share/jetbrains-manager-tool/docs/"
   install -Dm444 jetbrains-manager-tool/docs/help_docs.md "$pkgdir/usr/share/jetbrains-manager-tool/docs/help_docs.md"
 
   # Symbolic Link
   mkdir -p "$pkgdir/usr/bin"
   ln -s "/usr/share/jetbrains-manager-tool/jetbrains-manager-tool.py" "$pkgdir/usr/bin/jetbrains-manager-tool"
+
+  # Alias as jmtools
 
   # License and README
   install -d "$pkgdir/usr/share/doc/$pkgname/"

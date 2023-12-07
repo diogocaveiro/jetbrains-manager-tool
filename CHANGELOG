@@ -1,6 +1,5 @@
 V0.4 (07/12/2023):
     - Improved error handling.
-    - The system-wide installation is now only available for superusers.
     - Created build script.
 
 V0.3 (03/12/2023):
