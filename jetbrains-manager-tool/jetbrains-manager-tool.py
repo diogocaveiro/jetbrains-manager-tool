@@ -3,7 +3,6 @@
 """
     TODO:
         - Docs for custom path
-        - Build script
 """
 
 import shutil

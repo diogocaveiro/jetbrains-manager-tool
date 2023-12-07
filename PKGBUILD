@@ -1,13 +1,14 @@
 pkgname='jetbrains-manager-tool'
-pkgver=0.3.0
+pkgver=PACKAGE_VERSION
 pkgrel=1
 pkgdesc="JetBrains Manager Tool provides a streamlined process for the installation, update, and removal of various JetBrains applications."
+checksum=PACKAGE_CHECKSUM
 arch=('any')
 url='https://github.com/diogocaveiro/jetbrains-manager-tool'
 license=('GPL-3.0-only')
 depends=('python' 'python-requests' 'python-poetry' 'less')
 source=("jetbrains-manager-tool_V$pkgver.tar.gz")
-sha256sums=('01d6e7b4109eecb13f7c3162ddc42f682e72a0ab9100f95554da304f5b020125')
+sha256sums=("${checksum}")
 
 build() {
   cd "$srcdir"
