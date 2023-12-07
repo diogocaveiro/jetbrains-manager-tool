@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 
-# TODO: Update docs for custom path
+"""
+    TODO:
+        - Docs for custom path
+        - Only root for system-wide installation
+"""
 
 import shutil
 import requests
@@ -13,7 +17,7 @@ import json
 import logging
 
 __author__ = "Diogo Caveiro"
-__date__ = "2023-12-05"
+__date__ = "2023-12-07"
 __version__ = "0.4.0"
 __github__ = "https://github.com/diogocaveiro"
 __license__ = "GPLv3 License"
@@ -838,7 +842,12 @@ def request_root_permissions():
 
 if __name__ == "__main__":
     # Get arguments and flags
-    get_arguments_and_flags()
+    try:
+        get_arguments_and_flags()
+    except Exception:
+        logging.exception('Exception occurred')
+        print("Error parsing arguments. Stopping script.")
+        sys.exit(1)
 
     # Display help documentation
     if args.help:
@@ -856,8 +865,18 @@ if __name__ == "__main__":
             sys.exit(1)
         sys.exit(0)
 
-    # Request root permissions
-    request_root_permissions()
+    try:
+        # Request root permissions
+        request_root_permissions()
 
-    managertool = JetbrainsManagerTool
-    managertool()
+        # Run script
+        managertool = JetbrainsManagerTool
+        managertool()
+    except KeyboardInterrupt:
+        print("\n\nKeyboardInterrupt. Stopping script.")
+        logging.info("KeyboardInterrupt. Stopping script.")
+        sys.exit(1)
+    except Exception:
+        print("\n\nException occurred. Stopping script.")
+        logging.exception('Exception occurred')
+        sys.exit(1)
