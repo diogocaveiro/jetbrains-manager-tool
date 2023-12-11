@@ -368,8 +368,8 @@ class JetbrainsManagerTool:
             "\nAre you sure you want to {} {}? Enter YES for confirmation.\n".format(job, app_prompt)
         )
         if confirmation_question != "YES":
-            print("Cancelling removal.")
-            logging.info("No confirmation. Cancelling removal.")
+            print(f'Cancelling {job} job.')
+            logging.info(f'No confirmation. Cancelling {job}.')
             return False
         return True
 
