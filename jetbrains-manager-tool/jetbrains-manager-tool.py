@@ -177,6 +177,8 @@ class JetbrainsManagerTool:
         elif args.list:
             self.__check_installed_apps(list_installed_apps=True)
 
+        print("\nOperation completed successfully.")
+
     def __check_installed_apps(self, list_installed_apps=False):
         """
         Check and identify installed JetBrains applications along with their versions.
@@ -643,6 +645,8 @@ class JetbrainsManagerTool:
 
                 except Exception:
                     logging.exception('Exception occurred')
+
+        #TODO: Success message
 
     def __remove(self, no_confirm=False):
         """
