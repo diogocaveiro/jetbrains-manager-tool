@@ -11,6 +11,7 @@ today=$(date '+%Y-%m-%d')
 sed -i "s/__date__ = \".*\"/__date__ = \"${today}\"/g" jetbrains-manager-tool/jetbrains-manager-tool.py
 sed -i "s/__version__ = \".*\"/__version__ = \"${pkgver}\"/g" jetbrains-manager-tool/jetbrains-manager-tool.py
 sed -i "1s/.*/JetBrains Manager Tool ${pkgver} (${today})/" jetbrains-manager-tool/docs/help_docs.md
+sed -i "s/version = .*/version = ${pkgver}/g" pyproject.toml
 
 # Package to build
 echo "Compressing the package"
