@@ -11,8 +11,8 @@ import json
 import logging
 
 __author__ = "Diogo Caveiro"
-__date__ = "2023-12-07"
-__version__ = "0.4.0"
+__date__ = "2024-02-16"
+__version__ = "0.4.1"
 __github__ = "https://github.com/diogocaveiro"
 __license__ = "GPLv3 License"
 
@@ -646,7 +646,13 @@ class JetbrainsManagerTool:
                 except Exception:
                     logging.exception('Exception occurred')
 
-        #TODO: Success message
+            # Log install/update completion
+            logging.info(
+                "{} {} completed successfully.".format(
+                    APP_LIST[selected_app]["name"],
+                    "update" if update else "installation",
+                )
+            )
 
     def __remove(self, no_confirm=False):
         """
@@ -771,7 +777,8 @@ def get_arguments_and_flags():
         try:
             with open(os.path.join(os.path.expanduser('~'), '.config', 'jetbrains-manager-tool'), 'w') as config_file:
                 config_file.write(f'JETBRAINS_INSTALL_PATH={JETBRAINS_INSTALL_PATH}\n')
-            logging.debug(f'Created configuration file at {os.path.join(os.path.expanduser("~"), ".config", "jetbrains-manager-tool")}')
+            logging.debug(
+                f'Created configuration file at {os.path.join(os.path.expanduser("~"), ".config", "jetbrains-manager-tool")}')
         except Exception:
             logging.exception('Exception occurred')
     elif args.directory and not os.path.exists(args.directory):
@@ -804,7 +811,7 @@ def show_help_documentation():
         Exception: For any other exceptions that occur when attempting to open the documentation.
     """
 
-    docs_path = os.path.join(SCRIPT_DIRECTORY, 'docs/help_docs.md')
+    docs_path = os.path.join(SCRIPT_DIRECTORY, 'docs/help_pages.md')
 
     try:
         subprocess.run(['less', docs_path], shell=False)
