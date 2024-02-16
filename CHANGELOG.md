@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - Confirmation message now supports both update and install (commit [6d7de43](https://github.com/diogocaveiro/jetbrains-manager-tool/commit/6d7de437735c41c56d11e6ad15154c9790572309)).
+- Build.sh was replacing version in pyproject.toml incorrectly.
 
 ## [0.4.0] - 2023-12-07
 

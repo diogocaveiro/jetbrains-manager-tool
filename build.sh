@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the version
-pkgver="0.4.0"
+pkgver="0.4.1"
 
 # Other variables
 pkgtar="jetbrains-manager-tool_V${pkgver}.tar.gz"
@@ -10,12 +10,12 @@ pkgtar="jetbrains-manager-tool_V${pkgver}.tar.gz"
 today=$(date '+%Y-%m-%d')
 sed -i "s/__date__ = \".*\"/__date__ = \"${today}\"/g" jetbrains-manager-tool/jetbrains-manager-tool.py
 sed -i "s/__version__ = \".*\"/__version__ = \"${pkgver}\"/g" jetbrains-manager-tool/jetbrains-manager-tool.py
-sed -i "1s/.*/JetBrains Manager Tool ${pkgver} (${today})/" jetbrains-manager-tool/docs/help_docs.md
-sed -i "s/version = .*/version = ${pkgver}/g" pyproject.toml
+sed -i "1s/.*/JetBrains Manager Tool ${pkgver} (${today})/" jetbrains-manager-tool/docs/help_pages.md
+sed -i "s/version = .*/version = \"${pkgver}\"/g" pyproject.toml
 
 # Package to build
 echo "Compressing the package"
-tar -cvf "${pkgtar}" jetbrains-manager-tool/ LICENSE CHANGELOG poetry.lock pyproject.toml README.md
+tar -cvf "${pkgtar}" jetbrains-manager-tool/ LICENSE CHANGELOG.md poetry.lock pyproject.toml README.md
 
 # Create directories
 echo "Creating the directories"
