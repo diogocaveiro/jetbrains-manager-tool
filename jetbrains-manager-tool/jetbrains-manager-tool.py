@@ -1,4 +1,22 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+#
+# This file is part of the JetBrains Manager Tool distribution
+# (https://github.com/diogocaveiro/jetbrains-manager-tool).
+# Copyright (c) 2024 Diogo Caveiro.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, version 3.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
 
 import shutil
 import requests
@@ -11,7 +29,7 @@ import json
 import logging
 
 __author__ = "Diogo Caveiro"
-__date__ = "2024-02-16"
+__date__ = "2024-02-26"
 __version__ = "0.4.1"
 __github__ = "https://github.com/diogocaveiro"
 __license__ = "GPLv3 License"

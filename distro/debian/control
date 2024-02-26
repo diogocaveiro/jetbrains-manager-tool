@@ -1,0 +1,8 @@
+Package: jetbrains-manager-tool
+Version: 0.4.1
+Architecture: all
+Maintainer: Diogo Caveiro
+Description: Jetbrains Manager Tool provides a streamlined process for the installation, update, and removal of various JetBrains applications.
+Depends: python3, python3-requests, python3-poetry, python-is-python3, less
+License: GPL-3.0-only
+Homepage: https://github.com/diogocaveiro/jetbrains-manager-tool
