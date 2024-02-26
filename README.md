@@ -93,3 +93,7 @@ This project is licensed under the GPLv3 License - see the [LICENSE](LICENSE) fi
 ## No Affiliation
   
 This software is an independent project and has not been authorized, sponsored, or otherwise approved by JetBrains. All product names, logos, and brands are property of their respective owners. All company, product, and service names used in this software are for identification purposes only. Use of these names, logos, and brands does not imply endorsement.
+
+## Contributions
+
+Contributions are welcome. You can contribute by opening an issue or a pull request. Please read the [CONTRIBUTING](CONTRIBUTING.md) file for more information.
