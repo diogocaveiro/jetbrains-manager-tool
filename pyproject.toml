@@ -19,6 +19,7 @@ packages = [{include = "jetbrains-manager-tool"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 requests = "^2.31.0"
+idna = "^3.7"
 
 [build-system]
 requires = ["poetry-core"]
