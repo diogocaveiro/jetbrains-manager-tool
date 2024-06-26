@@ -22,7 +22,7 @@
 # It requires the following tools: tar, fakeroot, dpkg-deb, makepkg
 
 # Set the version
-pkgver="0.4.1"
+pkgver="0.4.2"
 
 # Other variables
 pkgtar="jetbrains-manager-tool_V${pkgver}.tar.gz"

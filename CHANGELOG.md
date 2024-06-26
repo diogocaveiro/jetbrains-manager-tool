@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.2] - 2024-06-26
+
+- [Update CVE-2024-37891 vulnerability](https://github.com/diogocaveiro/jetbrains-manager-tool/tree/4cf01388334614f7a8a3c081b65cebc1195ac43e)
+- [Update CVE-2024-35195 vulnerability](https://github.com/diogocaveiro/jetbrains-manager-tool/tree/cb44273e300d0cc25afd9b5bed5e75e3d3a04575)
+- [Update CVE-2024-3651 vulnerability](https://github.com/diogocaveiro/jetbrains-manager-tool/tree/abb2fcb6a83026e3bb0ceaeadabb3b696dd06b5d)
+
 ## [0.4.1] - 2024-02-16
 
 ### Added
