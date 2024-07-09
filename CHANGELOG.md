@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.3] - 2024-07-04
+
+### Fixed
+
+- [Update CVE-2024-39689 vulnerability](https://github.com/diogocaveiro/jetbrains-manager-tool/commit/44da7c8c0218280c6791ec3c956f2b3d6d1395b9)
+
 ## [0.4.2] - 2024-06-26
 
 ### Fixed
