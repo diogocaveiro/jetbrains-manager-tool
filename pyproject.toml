@@ -20,7 +20,8 @@ packages = [{include = "jetbrains-manager-tool"}]
 python = "^3.11"
 requests = "^2.32.0"
 idna = "^3.7"
-urllib = "^2.2.2"
+urllib3 = "^2.2.2"
+certifi = "^2024.7.4"
 
 [build-system]
 requires = ["poetry-core"]
