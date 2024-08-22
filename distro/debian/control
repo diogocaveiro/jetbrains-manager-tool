@@ -1,5 +1,5 @@
 Package: jetbrains-manager-tool
-Version: 0.4.2
+Version: 0.4.3
 Architecture: all
 Maintainer: Diogo Caveiro
 Description: Jetbrains Manager Tool provides a streamlined process for the installation, update, and removal of various JetBrains applications.
