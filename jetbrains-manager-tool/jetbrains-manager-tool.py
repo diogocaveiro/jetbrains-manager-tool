@@ -19,6 +19,8 @@
 
 
 import shutil
+from pprint import pformat
+
 import requests
 import argparse
 import os
@@ -197,7 +199,7 @@ class JetbrainsManagerTool:
 
         print("\nOperation completed successfully.")
 
-    def __check_installed_apps(self, list_installed_apps=False):
+    def __check_installed_apps(self, list_installed_apps: bool = False):
         """
         Check and identify installed JetBrains applications along with their versions.
 
@@ -339,7 +341,7 @@ class JetbrainsManagerTool:
                 last_version = version_elements[0].get("version")
 
                 if app == "android-studio":
-                    last_version = last_version.split(" ")[2]
+                    last_version = last_version.split(" ")[-1]
                     build_number = version_elements[0].get("number")[3:]
                 else:
                     build_number = version_elements[0].get("fullNumber")
@@ -352,7 +354,10 @@ class JetbrainsManagerTool:
                 logging.error(msg_fetch_data_error)
 
     @staticmethod
-    def __confirmation_prompt(job: str, app_list: list) -> bool:
+    def __confirmation_prompt(
+            job: str,
+            app_list: list
+    ) -> bool:
         """
         Display a user confirmation prompt for a given job on a list of applications.
 
@@ -393,7 +398,12 @@ class JetbrainsManagerTool:
             return False
         return True
 
-    def __install(self, update=False, only_update_data=False, update_mimetypes=False, no_confirm=False):
+    def __install(self,
+                  update: bool = False,
+                  only_update_data: bool = False,
+                  update_mimetypes: bool = False,
+                  no_confirm: bool = False
+                  ):
         """
         Install or update the selected applications.
 
@@ -577,11 +587,18 @@ class JetbrainsManagerTool:
                             install_path, APP_LIST[selected_app]["executable"]
                         )
                     )
-                    f.write(
-                        'Exec="{}/bin/{}" %f\n'.format(
-                            install_path, APP_LIST[selected_app]["executable"]
+                    if selected_app == "android-studio":
+                        f.write(
+                            'Exec="{}/bin/{}.sh" %f\n'.format(
+                                install_path, APP_LIST[selected_app]["executable"]
+                            )
                         )
-                    )
+                    else:
+                        f.write(
+                            'Exec="{}/bin/{}" %f\n'.format(
+                                install_path, APP_LIST[selected_app]["executable"]
+                            )
+                        )
                     f.write("Terminal=false\n")
                     f.write("Type=Application\n")
                     f.write("Categories=Development;\n")
@@ -617,14 +634,24 @@ class JetbrainsManagerTool:
                     logging.info(msg_symlink_exists)
                     logging.debug(f'Deleted existing symlink: {symlink_path}')
 
-                os.symlink(
-                    os.path.join(
-                        install_path,
-                        "bin",
-                        APP_LIST[selected_app]["executable"],
-                    ),
-                    symlink_path,
-                )
+                if selected_app == "android-studio":
+                    os.symlink(
+                        os.path.join(
+                            install_path,
+                            "bin",
+                            APP_LIST[selected_app]["executable"] + ".sh",
+                        ),
+                        symlink_path,
+                    )
+                else:
+                    os.symlink(
+                        os.path.join(
+                            install_path,
+                            "bin",
+                            APP_LIST[selected_app]["executable"],
+                        ),
+                        symlink_path,
+                    )
 
                 msg_symlink_create = "Successfully created symlink"
                 if self.verbose:
@@ -637,9 +664,14 @@ class JetbrainsManagerTool:
 
             # Chmod +x on executable
             try:
-                executable_path = os.path.join(
-                    install_path, "bin", APP_LIST[selected_app]["executable"]
-                )
+                if selected_app == "android-studio":
+                    executable_path = os.path.join(
+                        install_path, "bin", APP_LIST[selected_app]["executable"] + ".sh"
+                    )
+                else:
+                    executable_path = os.path.join(
+                        install_path, "bin", APP_LIST[selected_app]["executable"]
+                    )
                 subprocess.call(["sudo", "chmod", "+x", executable_path])
 
                 msg_executable_permissions = "Successfully set executable permissions"
