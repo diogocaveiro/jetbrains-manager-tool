@@ -29,8 +29,8 @@ import json
 import logging
 
 __author__ = "Diogo Caveiro"
-__date__ = "2024-07-09"
-__version__ = "0.4.3"
+__date__ = "2024-08-30"
+__version__ = "0.4.4"
 __github__ = "https://github.com/diogocaveiro"
 __license__ = "GPLv3 License"
 
@@ -578,7 +578,7 @@ class JetbrainsManagerTool:
                         )
                     )
                     f.write(
-                        'Exec="{}/bin/{}.sh" %f\n'.format(
+                        'Exec="{}/bin/{}" %f\n'.format(
                             install_path, APP_LIST[selected_app]["executable"]
                         )
                     )
@@ -621,7 +621,7 @@ class JetbrainsManagerTool:
                     os.path.join(
                         install_path,
                         "bin",
-                        APP_LIST[selected_app]["executable"] + ".sh",
+                        APP_LIST[selected_app]["executable"],
                     ),
                     symlink_path,
                 )
@@ -638,7 +638,7 @@ class JetbrainsManagerTool:
             # Chmod +x on executable
             try:
                 executable_path = os.path.join(
-                    install_path, "bin", APP_LIST[selected_app]["executable"] + ".sh"
+                    install_path, "bin", APP_LIST[selected_app]["executable"]
                 )
                 subprocess.call(["sudo", "chmod", "+x", executable_path])
 

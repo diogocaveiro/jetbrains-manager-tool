@@ -21,8 +21,20 @@
 # Run this script from the root of the project
 # It requires the following tools: tar, fakeroot, dpkg-deb, makepkg
 
-# Set the version
-pkgver="0.4.4"
+# Check if an argument is provided
+if [[ $# -eq 0 ]]; then
+  echo "Please provide an argument with the desired version."
+  exit 1
+fi
+
+# Get the version from the argument
+pkgver="$1"
+
+# Data validation
+if [[ ! $pkgver =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+  echo "Invalid version format."
+  exit 1
+fi
 
 # Other variables
 pkgtar="jetbrains-manager-tool_V${pkgver}.tar.gz"

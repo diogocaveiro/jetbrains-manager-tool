@@ -1,4 +1,4 @@
-JetBrains Manager Tool 0.4.3 (2024-07-09)
+JetBrains Manager Tool 0.4.4 (2024-08-30)
 
 Usage: jetbrains-manager-tool [OPTIONS]
 
