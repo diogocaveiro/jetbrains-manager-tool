@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.4.4] - 2024-08-30
+
+### Added
+
+- [Improve build.sh to use version number as an argument.](https://github.com/diogocaveiro/jetbrains-manager-tool/commit/ae4b83dfa8b21ea3d449b87d61a7f0d13bd67d43)
+
+### Fixed
+
+- [Fix Android Studio download link not being correctly created.](https://github.com/diogocaveiro/jetbrains-manager-tool/commit/1263403fb693e55d40c62fc5c3aa9f04abac40b2)
+- [Fix application menu shortcuts.](https://github.com/diogocaveiro/jetbrains-manager-tool/commit/ae4b83dfa8b21ea3d449b87d61a7f0d13bd67d43)
+
 ## [0.4.3] - 2024-07-04
 
 ### Fixed
