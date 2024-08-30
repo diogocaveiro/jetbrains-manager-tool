@@ -82,3 +82,7 @@ tar -xf "${arch_pkg}" -C deb_tmp/
 cp ../../distro/debian/control deb_tmp/DEBIAN/
 fakeroot dpkg-deb --build deb_tmp/ "jetbrains-manager-tool_${pkgver}_all.deb"
 rm -rf deb_tmp/
+
+# Checksum
+sha256sum "jetbrains-manager-tool_${pkgver}_all.deb" > "jetbrains-manager-tool_${pkgver}_all.deb.sha256sum"
+sha256sum "jetbrains-manager-tool-${pkgver}-1-any.pkg.tar.zst" > "jetbrains-manager-tool-${pkgver}-1-any.pkg.tar.zst.sha256sum"
