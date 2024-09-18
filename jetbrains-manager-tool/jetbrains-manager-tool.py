@@ -16,8 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-
-
+import re
 import shutil
 from pprint import pformat
 
@@ -341,7 +340,15 @@ class JetbrainsManagerTool:
                 last_version = version_elements[0].get("version")
 
                 if app == "android-studio":
-                    last_version = last_version.split(" ")[-1]
+                    pattern = r"\d{4}\.\d+\.\d+"
+                    match = re.search(pattern, last_version)
+                    if match:
+                        last_version = match.group()
+                    else:
+                        msg_fetch_data_error = "Could not find data for {}.".format(APP_LIST[app]["name"])
+                        print(msg_fetch_data_error)
+                        logging.error(msg_fetch_data_error)
+                        continue
                     build_number = version_elements[0].get("number")[3:]
                 else:
                     build_number = version_elements[0].get("fullNumber")
