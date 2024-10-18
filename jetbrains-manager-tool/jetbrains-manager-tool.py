@@ -30,8 +30,8 @@ import json
 import logging
 
 __author__ = "Diogo Caveiro"
-__date__ = "2024-08-30"
-__version__ = "0.4.4"
+__date__ = "2024-09-18"
+__version__ = "0.4.5"
 __github__ = "https://github.com/diogocaveiro"
 __license__ = "GPLv3 License"
 
